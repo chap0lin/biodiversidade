@@ -1,0 +1,23 @@
+#game-screen{
+    padding: 20px;
+}
+#game-screen .game-container{
+
+}
+#game-screen .game-container .scoreboard{
+    display: flex;
+    justify-content: space-around;
+}
+#game-screen .game-container .question{
+    text-align: center;
+}
+#game-screen .game-container .answers{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+}
+#game-screen .game-container .answers .item{
+    border: 1px solid gray;
+    
+}
