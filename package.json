@@ -7,18 +7,24 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "express": "^4.17.1",
+    "knex": "^0.21.7",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.4",
     "socket.io": "^2.3.0",
-    "socket.io-client": "^2.3.1"
+    "socket.io-client": "^2.3.1",
+    "sqlite3": "^5.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "knex:migrate": "knex --knexfile knexfile.js migrate:latest",
+    "knex:seed": "knex --knexfile knexfile.js seed:run",
+    "knex:rollback": "knex --knexfile knexfile.js migrate:rollback",
+    "knex:reboot": "knex --knexfile knexfile.js migrate:rollback && knex --knexfile knexfile.js migrate:latest && knex --knexfile knexfile.js seed:run"
   },
   "eslintConfig": {
     "extends": "react-app"
