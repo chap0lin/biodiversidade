@@ -1,4 +1,5 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
+import { gsap } from 'gsap'
 import './styles.css';
 
 var interval
@@ -7,6 +8,8 @@ function App() {
   const [round, setRound] = useState(0)
   const [timerValue, setTimerValue] = useState(10)
   const [playerPoints, setPlayerPoints] = useState(0)
+  const correctRef = useRef(null)
+  const wrongRef = useRef(null)
   const [question, setQuestion] = useState({
     id:0,
     question: '',
@@ -82,7 +85,7 @@ function App() {
 
   useEffect(()=>{
     setQuestion(bd[round])
-  }, [round])
+  }, [round, bd])
   useEffect(()=>{
     startTimer()
   }, [])
@@ -107,10 +110,16 @@ function App() {
     const time = timerValue
     //console.log(choice)
     if(choice === question.correctAnswer){
+      await gsap.to(correctRef.current, {duration: 0.8, background: 'green' })
+      await gsap.to(correctRef.current, {duration: 0.8, background: 'white' })
+
       setPlayerPoints(playerPoints+10+Math.floor(time))
-      alert('Correto!')
+      //alert('Correto!')
     }else{
-      alert('Errado!')
+      gsap.to(correctRef.current, {duration: 0.8, background: 'green' })
+      await gsap.to(wrongRef.current, {duration: 0.8, background: 'red' })
+      gsap.to(correctRef.current, {duration: 0.8, background: 'white' })
+      await gsap.to(wrongRef.current, {duration: 0.8, background: 'white' }) 
     }
     if(round<6){
       setRound(round+1)
@@ -140,7 +149,7 @@ function App() {
         </div>
         <div className="answers">
           {question.answers.map((item, index) => (
-            <div key={index} className="item" onClick={()=>handleSelection(index)}>
+            <div key={index} ref={index===question.correctAnswer?correctRef:wrongRef} className="item" onClick={()=>handleSelection(index)}>
               <p>{item}</p>
             </div>
           ))}
