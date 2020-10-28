@@ -225,6 +225,326 @@ module.exports = {
                 option_4: 'epifitismo',
                 answer: 1
             },
+            {
+                question: 'Foram os cristalógrafos responsáveis pelas imagens que ajudaram a revelar a configuração da molécula do DNA.',
+                option_1: 'James Watson e Francis Crick',
+                option_2: 'Rosalind Franklin e Maurice Wilkins',
+                option_3: 'Hugh Davson e James Danielli',
+                option_4: 'Erwin Chargaff e Linus Pauling',
+                answer: 1
+            },
+            {
+                question: 'Em que parte da célula ocorre a replicação do DNA?',
+                option_1: 'complexo de Golgi',
+                option_2: 'hialoplasma ',
+                option_3: 'núcleo',
+                option_4: 'retículo endoplasmático',
+                answer: 2
+            },
+            {
+                question: 'Qual base nitrogenada que ocorre no DNA, mas NÃO ocorre no RNA?',
+                option_1: 'adenina',
+                option_2: 'guanina',
+                option_3: 'timina',
+                option_4: 'uracila',
+                answer: 2
+            },
+            {
+                question: 'Um trabalho realizado por diversos países com a finalidade de desvendar a sequência de todos os pares de nucleotídeos do DNA de um organismo:',
+                option_1: 'Vinculação Gênica',
+                option_2: 'Dogma Central da Biologia',
+                option_3: 'Mapeamento',
+                option_4: 'Projeto Genoma',
+                answer: 3
+            },
+            {
+                question: 'O tipo de rearranjo cromossômico em que parte do cromossomo se quebra e se liga a um cromossomo não-homólogo é chamado...',
+                option_1: 'deleção',
+                option_2: 'inversão',
+                option_3: 'não disjunção',
+                option_4: 'translocação',
+                answer: 3
+            },
+            {
+                question: 'Mutação cromossômica numérica, que ocorre quando os cromossomos são duplicados e a célula não se divide, de modo que todos os pares de cromossomos homólogos são afetados:',
+                option_1: 'aneuploidia',
+                option_2: 'trissomia',
+                option_3: 'poliploidia',
+                option_4: 'translocação',
+                answer: 2
+            },
+            {
+                question: 'O termo ploidia relaciona-se ao número de cromossomos das células de um organismo. Em humanos, quase todas as células são:',
+                option_1: 'haploides',
+                option_2: 'diploides',
+                option_3: 'triploides',
+                option_4: 'poliploides',
+                answer: 1
+            },
+            {
+                question: 'Como é popularmente conhecido o quadro resultante da trissomia do cromossomo 21?',
+                option_1: 'Síndrome de cri du chat',
+                option_2: 'Síndrome de Down',
+                option_3: 'Síndrome de Klinefelter',
+                option_4: 'Síndrome de Turner ',
+                answer: 1
+            },
+            {
+                question: 'Refere-se à natureza da replicação do DNA:',
+                option_1: 'conservativa',
+                option_2: 'dispersiva',
+                option_3: 'semiconservativa',
+                option_4: 'citoplasmática',
+                answer: 2
+            },
+            {
+                question: 'Qual desses é um códon de finalização no RNA mensageiro?',
+                option_1: 'AUG',
+                option_2: 'UAG',
+                option_3: 'CCC',
+                option_4: 'CAG',
+                answer: 1
+            },
+            {
+                question: 'No caso em que a substituição de um nucleotídeo no DNA não provoca mudança na sequência de aminoácidos da proteína correspondente, a mutação é chamada:',
+                option_1: 'mutação deletéria',
+                option_2: 'missense mutation',
+                option_3: 'mutação sinônima',
+                option_4: 'nonsense mutation',
+                answer: 2
+            },
+            {
+                question: 'Na molécula do DNA, adenina e timina ligam-se por meio de...',
+                option_1: 'ligação fosfodiéster',
+                option_2: 'uma ponte de hidrogênio',
+                option_3: 'duas pontes de hidrogênio',
+                option_4: 'três pontes de hidrogênio',
+                answer: 2
+            },
+            {
+                question: 'Nos genes que apresentam a informação biológica descontínua, que seções são efetivamente codificadoras?',
+                option_1: 'íntrons',
+                option_2: 'éxons',
+                option_3: 'promotores',
+                option_4: 'UTR',
+                answer: 1
+            },
+            {
+                question: 'Como são chamadas as pequenas moléculas circulares de DNA, em bactérias, capazes de sofrer replicação independentemente do cromossomo?',
+                option_1: 'ribossomos',
+                option_2: 'fímbrias',
+                option_3: 'microssomos',
+                option_4: 'plasmídeos',
+                answer: 3
+            },
+            {
+                question: 'Forma-se quando vários ribossomos se ligam a uma molécula de mRNA, para que ocorra a síntese de várias moléculas da proteína:',
+                option_1: 'peroxissomo',
+                option_2: 'glioxissomo',
+                option_3: 'polissomo',
+                option_4: 'nucleossomo',
+                answer: 2
+            },
+            {
+                question: 'Qual dessas enzimas promove o desenrolamento da molécula de DNA, para o processo de replicação?',
+                option_1: 'DNA Helicase',
+                option_2: 'DNA Ligase',
+                option_3: 'DNA Polimerase I',
+                option_4: 'DNA Polimerase III',
+                answer: 0
+            },
+            {
+                question: 'Alteração citogenética associada à leucemia mieloide crônica, resulta de uma translocação recíproca envolvendo os cromossomos 9 a 22:',
+                option_1: 'cromossomo Philadelphia',
+                option_2: 'isocromossomo 22q',
+                option_3: 'trissomia do 22',
+                option_4: 'cromossomo em anel',
+                answer: 0
+            },
+            {
+                question: 'A organização molecular do DNA foi decifrada em 1953, por...',
+                option_1: 'James Watson e Francis Crick',
+                option_2: 'Rosalind Franklin e Maurice Wilkins',
+                option_3: 'Hugh Davson e James Danielli',
+                option_4: 'Erwin Chargaff e Linus Pauling',
+                answer: 0
+            },
+            {
+                question: 'Se uma das cadeias do DNA apresentar a sequência TAG CCC GTA, a região correspondente da outra cadeia apresentará...',
+                option_1: 'TAG CCC GTA',
+                option_2: 'UAG CCC GUA',
+                option_3: 'ATC GGG CAT',
+                option_4: 'AUC GGG CAU',
+                answer: 2
+            },
+            {
+                question: 'Qual desses cariótipos ocorre nas células de pacientes com Síndrome de Turner?',
+                option_1: '46, XX',
+                option_2: '46, XY',
+                option_3: '45, X',
+                option_4: '47, XXY',
+                answer: 2
+            },
+            {
+                question: 'Qual dessas pode ser consequência de uma não disfunção de cromossomos sexuais durante a meiose?',
+                option_1: 'Síndrome de Klinefelter',
+                option_2: 'Síndrome de Cri Du Chat',
+                option_3: 'Síndrome de Down',
+                option_4: 'Síndrome de Patau',
+                answer: 0
+            },
+            {
+                question: 'A enzima RNA polimerase destaca-se no processo de...',
+                option_1: 'replicação',
+                option_2: 'transcrição',
+                option_3: 'tradução',
+                option_4: 'transdução',
+                answer: 1
+            },
+            {
+                question: 'Como é chamada a retirada de íntrons do transcrito primário de RNA e reunião dos éxons?',
+                option_1: 'splicing',
+                option_2: 'crossing over',
+                option_3: 'permafrost',
+                option_4: 'ipso facto',
+                answer: 0
+            },
+            {
+                question: 'A diferença entre o DNA do chimpanzé e de humanos está...',
+                option_1: 'abaixo dos 5%',
+                option_2: 'entre 5% e 10%',
+                option_3: 'entre 10% e 15%',
+                option_4: 'entre 15% e 20%',
+                answer: 0
+            },
+            {
+                question: 'Como são chamados os monômeros das grandes moléculas de proteína?',
+                option_1: 'aminoácidos',
+                option_2: 'monossacarídeos',
+                option_3: 'nucleotídeos',
+                option_4: 'ácidos graxos',
+                answer: 0
+            },
+            {
+                question: 'Na espécie humana, qual dessas células é haploide?',
+                option_1: 'neurônio',
+                option_2: 'espermatozoide ',
+                option_3: 'eritrócito',
+                option_4: 'neutrófilo',
+                answer: 1
+            },
+            {
+                question: 'Qual desses componentes da célula contém informações para as características do organismo?',
+                option_1: 'cromossomo',
+                option_2: 'centríolo',
+                option_3: 'lisossomo',
+                option_4: 'peroxissomo',
+                answer: 0
+            },
+            {
+                question: 'O primeiro organismo a ter seu genoma completamente conhecido foi...',
+                option_1: 'uma bactéria',
+                option_2: 'uma levedura',
+                option_3: 'um verme',
+                option_4: 'uma planta',
+                answer: 0
+            },
+            {
+                question: 'Quais são as bases nitrogenadas pirimídicas do DNA?',
+                option_1: 'adenina e guanina',
+                option_2: 'citosina e timina',
+                option_3: 'guanina e citosina',
+                option_4: 'adenina e timina',
+                answer: 1
+            },
+            {
+                question: 'Segundo o modelo de Watson e Crick, na molécula do DNA as duas cadeias são...',
+                option_1: 'paralelas',
+                option_2: 'antiparalelas',
+                option_3: 'perpendiculares',
+                option_4: 'concêntricas',
+                answer: 1
+            },
+            {
+                question: 'Qual dessas enzimas viola o dogma central da biologia molecular?',
+                option_1: 'DNA helicase',
+                option_2: 'transcriptase reversa',
+                option_3: 'DNA polimerase',
+                option_4: 'RNA polimerase',
+                answer: 1
+            },
+            {
+                question: 'Qual dessas doenças resulta de mutação gênica por substituição de uma única base nitrogenada no DNA?',
+                option_1: 'anemia falciforme',
+                option_2: 'câncer cervical',
+                option_3: 'leucemia mieloide crônica',
+                option_4: 'síndrome de Down',
+                answer: 0
+            },
+            {
+                question: 'O genoma humano tem cerca de quantos genes?',
+                option_1: '6000',
+                option_2: '21000',
+                option_3: '30000',
+                option_4: '42000',
+                answer: 1
+            },
+            {
+                question: 'O Brasil entrou no cenário do estudo de genomas por ocasião do sequenciamento da...',
+                option_1: 'levedura Saccharomyces cerevisiae',
+                option_2: 'planta Arabidopsis thaliana',
+                option_3: 'bactéria Xylella fastidiosa',
+                option_4: 'bactéria Escherichia coli',
+                answer: 2
+            },
+            {
+                question: 'Quais dessas são as bases nitrogenadas púricas dos ácidos nucleicos?',
+                option_1: 'adenina e citosina',
+                option_2: 'citosina e timina',
+                option_3: 'adenina e guanina',
+                option_4: 'timina e uracila',
+                answer: 2
+            },
+            {
+                question: 'Na molécula do DNA, guanina e citosina ligam-se por meio de...',
+                option_1: 'ligação fosfodiéster',
+                option_2: 'uma ponte de hidrogênio',
+                option_3: 'duas pontes de hidrogênio',
+                option_4: 'três pontes de hidrogênio',
+                answer: 3
+            },
+            {
+                question: 'Que moléculas de RNA obedecem ao código genético, formando um elo físico e informacional entre a sequência de nucleotídeos do mRNA maduro e a sequência de aminoácidos no polipeptídeo?',
+                option_1: 'rRNA',
+                option_2: 'tRNA',
+                option_3: 'hnRNA',
+                option_4: 'snRNA',
+                answer: 1
+            },
+            {
+                question: 'Além do genoma nuclear, existem outros genomas, localizados em organelas citoplasmáticas. Quais são essas organelas?',
+                option_1: 'mitocôndrias e cloroplastos',
+                option_2: 'ribossomos e cromossomos',
+                option_3: 'retículo endoplasmático e complexo de Golgi',
+                option_4: 'lisossomos e vacúolos',
+                answer: 0
+            },
+            {
+                question: 'Qual desses cientistas propôs a Teoria Endossimbiótica?',
+                option_1: 'Rosalind Franklin',
+                option_2: 'Thomas Morgan',
+                option_3: 'Lynn Margulis',
+                option_4: 'Camilo Golgi',
+                answer: 2
+            },
+            {
+                question: 'Qual dessas NÃO se refere ao genoma mitocondrial humano?',
+                option_1: 'abriga 37 genes',
+                option_2: 'hereditariedade uniparental',
+                option_3: 'duplo filamento circular',
+                option_4: 'representa mais de 10% do DNA celular',
+                answer: 3
+            },
     ])
     }
 }
