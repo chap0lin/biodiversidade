@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {Link} from 'react-router-dom'
 import { gsap } from 'gsap'
-import './styles.css';
+//import './styles.css';
 
 var interval
 
