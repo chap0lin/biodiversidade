@@ -1,0 +1,27 @@
+#page-title{
+    background: green;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#page-title .logo-container{
+    margin-top: 30px;
+}
+
+#page-title .rooms-container{
+    border: 1px solid gray;
+    padding: 10px;
+    background: rgba(0,0,0,0.1);
+    border-radius: 50px;
+    width: 320px;
+}
+#page-title .rooms-container .room-list .list-header{
+    display: flex;
+    justify-content: space-between;
+}
+#page-title .rooms-container .room-list .room-item{
+    display: flex;
+    justify-content: space-between;
+}

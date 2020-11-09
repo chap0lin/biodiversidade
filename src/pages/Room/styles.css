@@ -1,0 +1,13 @@
+#page-room{
+    display: flex;
+    flex-direction: column;
+    background: green;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+#page-room .logo-container{
+    align-self: center;
+    margin-top: 30px
+}
