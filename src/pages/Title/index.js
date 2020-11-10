@@ -1,9 +1,12 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
+import {Link, useLocation} from 'react-router-dom'
 
 import './styles.css'
 
 function Title(){
+    const location = useLocation()
+    const user_object = location.state.params
+    console.log(JSON.stringify(user_object))
     return(
         <div id="page-title">
             <div className="logo-container">

@@ -8,6 +8,8 @@ const app = express()
 const server = http.Server(app)
 const io = socketio(server)
 
+app.use(express.json());
+
 app.use(express.static(path.resolve(__dirname, '..','build')))
 app.use(routes)
 

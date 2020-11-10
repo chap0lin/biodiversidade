@@ -1,9 +1,38 @@
-import React from 'react'
-import {Link} from 'react-router-dom'
+import React, {useState} from 'react'
+import {Link, useHistory} from 'react-router-dom'
 import Background from '../../components/background'
+import api from '../../services/api'
 import './styles.css'
 
 function Login(){
+    const history = useHistory()
+    const [loginForm, setLoginForm] = useState({
+        login: '',
+        password: '',
+    })
+    function handleLogin(){
+        try{
+            api.post('services-login', loginForm).then(response => {
+                history.push('/title', {params: response.data})
+            }).catch(function (error) {
+                if (error.response) {
+                  // Request made and server responded
+                  console.log(error.response.status);
+                  alert(error.response.data.message)
+                }else {
+                  // Something happened in setting up the request that triggered an Error
+                  console.log('2Error', error.message);
+                }
+            })
+        }catch(error){
+            console.log('3' + error)
+        }
+        
+    }
+    function handleInputChange(event){
+        const {name, value} = event.target
+        setLoginForm({...loginForm, [name]: value})
+    }
     return(
         <div id="page-login" style={{background: 'green'}}>
             <Background>
@@ -21,14 +50,16 @@ function Login(){
                 <div className="login-container">
                     <h2 className="container-title">Entrar</h2>
                     <div className="input-field">
-                        <input type="text" className="user" placeholder="nome de usuário" />
+                        <input type="text" name="login" placeholder="nome de usuário"
+                        onChange={handleInputChange} />
                     </div>
                     <div className="input-field">
-                        <input type="text" className="password" placeholder="senha" />
+                        <input type="text" name="password" placeholder="senha"
+                        onChange={handleInputChange} />
                     </div>
-                    <Link to="/title" >
-                    <button>ENTRAR</button>
-                    </Link>
+                    
+                    <button onClick={handleLogin}>ENTRAR</button>
+                    
                     <p>Não possui conta? Cadastre-se</p>
                 </div>
                 <div className="anon-container">
