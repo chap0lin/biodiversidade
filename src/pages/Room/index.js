@@ -17,6 +17,7 @@ function Room(){
                 <circle id="Elipse_2" data-name="Elipse 2" cx="1.5" cy="1.5" r="1.5" transform="translate(187 59)" fill="#fff"/>
             </svg>
             </div>
+            <div></div>
             <h1>Room</h1>
             <Link to="/game" >
                 <h2>Jogar</h2>
