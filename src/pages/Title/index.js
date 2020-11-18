@@ -1,13 +1,38 @@
-import React from 'react'
-import {Link, useLocation} from 'react-router-dom'
+import React, { useState } from 'react'
+import { useEffect } from 'react'
+import {Link, useLocation, useHistory} from 'react-router-dom'
 import Background from '../../components/background'
+import SocketConnection from '../../services/socket-connection'
 
 import './styles.css'
-
 function Title(){
+    var socketConnection = new SocketConnection()
+    const socket = socketConnection.conn()
     const location = useLocation()
+    const history = useHistory()
     const user_object = location.state!=null?location.state.params:{}
+    const [titleObject, setTitleObject] = useState({})
     console.log(JSON.stringify(user_object))
+
+    useEffect(()=>{
+        socket.emit('titleRequest', user_object)
+        // eslint-disable-next-line
+    }, [])
+
+    socket.on('message', message => {
+        console.log(`[${socket.id}]:${message}`)
+    })
+
+    socket.on('titleMessage', message=> {
+        setTitleObject(message)
+    })
+
+    function handleEnterRoom(){
+        socket.emit('enterRoom', {roomId: 1})
+        history.push('/room', {params: 1})
+    }
+
+
     return(
         <div id="page-title">
             <Background>
@@ -30,14 +55,18 @@ function Title(){
                             <p>Nome da Sala</p>
                             <p>Jogadores</p>
                         </div>
-                        <Link to="/room" >
-                        <div className="room-item">
-                            <p>Sala geral 1</p>
-                            <p>32/50</p>
-                        </div>
-                        </Link>
+                        {titleObject.rooms!=null &&
+                            titleObject.rooms.map(room => (
+                                <div className="room-item" key={room.id}>
+                                    <p>{room.name}</p>
+                                    <p>{`${room.n_players}/${room.size}`}</p>
+                                </div>
+                            ))
+                        
+                        }
+                        
                     </div>
-                    <button>ENTRAR NA SALA</button>
+                    <button onClick={handleEnterRoom}>ENTRAR NA SALA</button>
                 </div>
                 <div className="buttons-container">
                     <button>CRIAR SALA</button>

@@ -1,13 +1,55 @@
 #page-room{
     display: flex;
     flex-direction: column;
-    background: green;
     align-items: center;
     width: 100vw;
     height: 100vh;
 }
 
 #page-room .logo-container{
-    align-self: center;
     margin-top: 30px
+}
+
+
+#page-room .players-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid gray;
+    padding: 10px;
+    background: rgba(0,0,0,0.1);
+    border-radius: 50px;
+    width: 300px;
+}
+#page-room .players-container .title{
+    text-align: center;
+    color: white;
+}
+
+#page-room .players-container .players-list .list-header{
+    display: flex;
+    justify-content: space-between;
+    width: 260px;
+    color: white;
+}
+#page-room .players-container .players-list .player-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+#page-room .players-container .players-list .player-item .ocupado{
+    width: 20px;
+    height: 20px;
+    background: #344B29;
+    border-radius: 10px; 
+}
+
+#page-room .players-container button{
+    height: 45px;
+    width: 160px;
+    border-radius: 20px;
+    background: #344B29;
+    color: white;
+    border:1px solid gray;
 }

@@ -11,7 +11,7 @@ class UsersController{
                 .where('login', String(login))
                 .where('password', String(password))
             if(user_data.length>0){
-                response.json(user_data)
+                response.json(user_data[0])
             }else{
                 response.status(400).json({message: 'Usuário ou Senha incorretos!'})
             }
