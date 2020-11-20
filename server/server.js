@@ -138,3 +138,6 @@ function getPlayerBySocketId(id){
 server.listen(3333, ()=>{
     console.log('> Server listening on port: 3333')
 })
+
+// nova alternativa
+// receber todos os eventos alterar e passar o objeto do jogo completo pros jogadores.
