@@ -1,12 +1,15 @@
 import React, {useEffect, useState} from 'react'
 import {Link, useHistory} from 'react-router-dom'
 import Background from '../../components/background'
-import SocketConnection from '../../services/socket-connection'
+//import SocketConnection from '../../services/socket-connection'
+import {useSocket} from '../../services/socket-connection'
+
 import './styles.css'
 
 function Room(){
-    var socketConnection = new SocketConnection()
-    const socket = socketConnection.conn()
+    // var socketConnection = new SocketConnection()
+    // const socket = socketConnection.conn()
+    const socket = useSocket()
     const history = useHistory()
     const [roomObject, setRoomObject] = useState({})
     useEffect(()=>{

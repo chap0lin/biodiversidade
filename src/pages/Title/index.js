@@ -2,12 +2,14 @@ import React, { useState } from 'react'
 import { useEffect } from 'react'
 import {Link, useLocation, useHistory} from 'react-router-dom'
 import Background from '../../components/background'
-import SocketConnection from '../../services/socket-connection'
+//import SocketConnection from '../../services/socket-connection'
+import {useSocket} from '../../services/socket-connection'
 
 import './styles.css'
 function Title(){
-    var socketConnection = new SocketConnection()
-    const socket = socketConnection.conn()
+    //var socketConnection = new SocketConnection()
+    //const socket = socketConnection.conn()
+    const socket = useSocket()
     const location = useLocation()
     const history = useHistory()
     const user_object = location.state!=null?location.state.params:{}

@@ -39,7 +39,15 @@ var titleObject = {
 
 var players = []
 
-var games = []
+var game = {
+    player_1: null,
+    player_2: null,
+    questions: null,
+    player1Responded: false,
+    player2Responded: false,
+    player1Points: 0,
+    player2Points: 0
+}
 var gameStarted = 0
 
 io.on('connection', (socket) => {
@@ -76,22 +84,16 @@ io.on('connection', (socket) => {
         io.to('room 1').emit('message', 'Messagem para room 1')
     })
 
-    socket.on('playerReady', ()=>{
-        if(games.length===0){
+    socket.on('playerReady', async()=>{
+        console.log('received playerReady')
+        if(game.player_1===null){
             socket.join('game 1')
-            games.push({
-                player_1: getPlayerBySocketId(socket.id)
-            })
+            game.player_1 = await getPlayerBySocketId(socket.id)
+            //console.log('1:' + JSON.stringify(game.player_1))
         }else{
-            var auxgames = []
             socket.join('game 1')
-            games.map(game=>{
-                auxgames.push({
-                    player_2: getPlayerBySocketId(socket.id),
-                    ...game
-                })
-            })
-            games = auxgames
+            game.player_2 = await getPlayerBySocketId(socket.id)
+            //console.log('2:' + JSON.stringify(game))
             io.to('game 1').emit('GameFound')
         }
     })
@@ -99,19 +101,34 @@ io.on('connection', (socket) => {
     socket.on('gameRequest', async()=>{
         if(gameStarted == 1){ // segunda requisicao recebida
             const questions = await questionsController.getQuizQuestions()
-            console.log(JSON.stringify(questions))
-            io.to('game 1').emit('GameStarted', {
-                players: games[0],
-                questions: questions
-            })
+            //console.log(JSON.stringify(questions))
+            game.currentQuestion = 0
+            game.questions = questions
+            io.to('game 1').emit('GameStarted', game)
         }else{
             gameStarted = 1;
         }
     })
 
     socket.on('playerResponded', message => {
-        socket.to('game 1').emit('playerResponded', message)
         console.log(`${socket.id} responded wining ${message.points} points`)
+        if(game.player_1.socketId === socket.id){
+            game.player1Responded = true
+            game.player1Points = message.points
+        }else{
+            game.player2Responded = true
+            game.player2Points = message.points
+        }
+        socket.to('game 1').emit('playerResponded', game)
+        if(game.player1Responded && game.player2Responded){
+            console.log('Both Responded, starting 2s delay')
+            setTimeout(()=>{
+                console.log('2s later, sending message to next round')
+                io.to('game 1').emit('NextRound', game)
+            }, 
+            2000)
+        }
+        
     })
 
     socket.on('disconnect', ()=>{
@@ -127,12 +144,17 @@ io.on('connection', (socket) => {
     })
 })
 
-function getPlayerBySocketId(id){
+async function getPlayerBySocketId(id){
+    //console.log('chamou funcao')
+    var output
     players.map(player => {
         if(player.socketId === id){
-            return player
+            //console.log('GetPlayer: ' + JSON.stringify(player))
+            output = player
+            return
         }
     })
+    return output
 }
 
 server.listen(3333, ()=>{

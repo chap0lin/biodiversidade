@@ -2,14 +2,16 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useHistory } from 'react-router-dom'
 import { gsap } from 'gsap'
 import Background from '../../components/background'
-import SocketConnection from '../../services/socket-connection'
+//import SocketConnection from '../../services/socket-connection'
+import {useSocket} from '../../services/socket-connection'
 import './styles.css';
 
 var interval
 
 function Game() {
-	var socketConnection = new SocketConnection()
-	const socket = socketConnection.conn()
+	// var socketConnection = new SocketConnection()
+	// const socket = socketConnection.conn()
+	const socket = useSocket()
 	const history = useHistory()
 	const [round, setRound] = useState(0)
 	const [timerValue, setTimerValue] = useState(10)
@@ -24,8 +26,6 @@ function Game() {
 		correctAnswer: 0
 	})
 	const [bd, setBd] = useState({})
-	var playerResponded = false
-	var adversaryResponded = false
 
 	useEffect(()=>{
         socket.emit('gameRequest', {})
@@ -36,27 +36,44 @@ function Game() {
 		console.log(JSON.stringify(message))
 		setBd(message.questions)
 		setQuestion(message.questions[round])
+		if(message.player_1.socketId === socket.id){
+			setPlayerNames({
+				player: message.player_1.login,
+				adversary: message.player_2.login
+			})
+		}else{
+			setPlayerNames({
+				player: message.player_2.login,
+				adversary: message.player_1.login
+			})
+		}
 		startTimer()
 	})
-
-	socket.on('playerResponded', message => {
-		console.log('Player Responded and scored: ' + message.points)
-		setScore({
-			...score,
-			adversary: message.points
-		})
-		if(playerResponded){
-			if(round<6){
-				setRound(round + 1)
-				setQuestion(bd[round])
-				playerResponded = false
-				adversaryResponded = false
-				startTimer()
+	var playerResponded = false
+	socket.once('playerResponded', message => {
+		if(playerResponded === false){
+			playerResponded = true
+			console.log('Player Responded' + playerResponded)
+			if(message.player_1.socketId === socket.id){
+				setScore({
+					...score,
+					adversary: message.player2Points
+				})
 			}else{
-				alert('Acabou!')
+				setScore({
+					...score,
+					adversary: message.player1Points
+				})
 			}
-		}else{
-			adversaryResponded = true
+		}
+	})
+	socket.once('NextRound', async(game)=>{
+		console.log('Next Round received')
+		if(round<6){
+			playerResponded = false
+			await setRound(round + 1)
+			setQuestion(game.questions[round])
+			startTimer()
 		}
 	})
 
@@ -65,65 +82,10 @@ function Game() {
 	  player: 0,
 	  adversary: 0
 	})
-
-	// const bd = [
-	// 	{
-	// 		id: 1,
-	// 		question: 'Quanto maior a superposição dos nichos ecológicos de duas espécies, maior será ...',
-	// 		answers: [
-	// 			'a competição', 'a protocooperação', 'o potencial biótico', 'o bioma'
-	// 		],
-	// 		correctAnswer: 0
-	// 	},
-	// 	{
-	// 		id: 2,
-	// 		question: 'Termo adotado por Van Potter em 1970/71 para integrar aspectos das ciências naturais com valores humanos, viabilizando o que ele chamou de “Ponte para o Futuro”',
-	// 		answers: [
-	// 			'Alelobiose', 'Bioética', 'Biotecnologia', 'Sociobiologia '
-	// 		],
-	// 		correctAnswer: 1
-	// 	},
-	// 	{
-	// 		id: 3,
-	// 		question: 'As características abaixo são observadas e primatas do novo mundo, exceto:',
-	// 		answers: [
-	// 			'cauda preênsil', 'geralmente arborícolas', 'polegares opositores', 'nariz achatado, com narinas abertas para os lados'
-	// 		],
-	// 		correctAnswer: 2
-	// 	},
-	// 	{
-	// 		id: 4,
-	// 		question: 'Qual o dedo mais importante dos hominídeos?',
-	// 		answers: [
-	// 			'anelar', 'médio', 'indicador', 'polegar'
-	// 		],
-	// 		correctAnswer: 3
-	// 	},
-	// 	{
-	// 		id: 5,
-	// 		question: 'Como são chamadas as espécies que possuem nichos ecológicos semelhantes, porém habitam regiões geográficas distintas?',
-	// 		answers: [
-	// 			'competidoras', 'equivalentes ecológicos', 'sinfílicas', 'pioneiras'
-	// 		],
-	// 		correctAnswer: 1
-	// 	},
-	// 	{
-	// 		id: 6,
-	// 		question: 'Papagaio verdadeiro, pipira vermelha e sanhaço são pássaros frugívoros. Portanto, pertencem à mesma ...',
-	// 		answers: [
-	// 			'família', 'guilda', 'classe', 'ordem'
-	// 		],
-	// 		correctAnswer: 1
-	// 	},
-	// 	{
-	// 		id: 7,
-	// 		question: 'O nicho ecológico da espécie humana é muito amplo. Por este motivo a espécie é considerada ...',
-	// 		answers: [
-	// 			'cosmopolita', 'especialista ', 'generalista', 'euriécia'
-	// 		],
-	// 		correctAnswer: 2
-	// 	},
-	// ]
+	const [playerNames, setPlayerNames] = useState({
+		player: '',
+		adversary: '',
+	})
 
 
 	// useEffect(() => {
@@ -150,36 +112,26 @@ function Game() {
 		const time = timerValue
 		//console.log(choice)
 		if (choice === question.correctAnswer) {
-			await gsap.to(correctRef.current, { duration: 0.8, background: 'green' })
-			await gsap.to(correctRef.current, { duration: 0.8, background: 'white' })
 			await setScore({
 				...score,
 				player: score.player + 10 + Math.floor(time)
 			})
+			socket.emit('playerResponded', {
+				points: score.player
+			})
+			await gsap.to(correctRef.current, { duration: 0.8, background: 'green' })
+			await gsap.to(correctRef.current, { duration: 0.8, background: 'white' })
+			
 			//alert('Correto!')
 		} else {
+			socket.emit('playerResponded', {
+				points: score.player
+			})
 			gsap.to('.item', { duration: 0.8, background: 'red' })
 			await gsap.to(correctRef.current, { duration: 0.8, background: 'green' })
 			gsap.to('.item', { duration: 0.8, background: 'white' })
 			await gsap.to(correctRef.current, { duration: 0.8, background: 'white' })
 		}
-		socket.emit('playerResponded', {
-			points: score.player
-		})
-		if(adversaryResponded){
-			if(round<6){
-				setRound(round + 1)
-				setQuestion(bd[round])
-				playerResponded = false
-				adversaryResponded = false
-				startTimer()
-			}else{
-				alert('Acabou!')
-			}
-		}else{
-			playerResponded = true
-		}
-
 	}
 
 	return (
@@ -199,14 +151,14 @@ function Game() {
 				<div className="game-container">
 					<div className="scoreboard">
 						<div className="player-one">
-							<p>Joãozinho</p>
+							<p>{playerNames.player}</p>
 							<p>{score.player}</p>
 						</div>
 						<div className="timer">
 							<p>{timerValue}</p>
 						</div>
 						<div className="player-two">
-							<p>Fulaninho</p>
+							<p>{playerNames.adversary}</p>
 							<p>{score.adversary}</p>
 						</div>
 					</div>
@@ -231,3 +183,4 @@ function Game() {
 }
 
 export default Game;
+
