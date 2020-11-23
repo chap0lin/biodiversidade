@@ -1,34 +1,44 @@
 import React, {useEffect, useState} from 'react'
 import {Link, useHistory} from 'react-router-dom'
 import Background from '../../components/background'
-//import SocketConnection from '../../services/socket-connection'
-import {useSocket} from '../../services/socket-connection'
+import api from '../../services/api'
 
 import './styles.css'
-
+var interval
+var playerReady = false
 function Room(){
-    // var socketConnection = new SocketConnection()
-    // const socket = socketConnection.conn()
-    const socket = useSocket()
+    const user_object = JSON.parse(localStorage.getItem('userData'))
+    const roomId = localStorage.getItem('roomId')
+    
     const history = useHistory()
     const [roomObject, setRoomObject] = useState({})
     useEffect(()=>{
-        socket.emit('roomRequest', {})
+        if(user_object != null && roomId != null){
+            interval = setInterval(keepAlive, 1000)
+        }else{
+            history.push('/')
+        }
         // eslint-disable-next-line
     }, [])
-
-    socket.on('roomMessage', message=> {
-        setRoomObject(message)
-    })
-    socket.on('message', message => {
-        console.log(`[${socket.id}]:${message}`)
-    })
-    function handlePlayClick(){
-        socket.emit('playerReady')
+    function keepAlive(){
+        try{
+            api.post('keepPlayerAliveRoom', {user_object, roomId, ready: playerReady}).then(response=>{
+                setRoomObject(response.data)
+                if(response.data.started){
+                    clearInterval(interval)
+                    history.push('/game')
+                }
+            })
+        }catch(err){
+            console.log(err)
+            history.push('/')
+        }
     }
-    socket.on('GameFound', ()=>{
-        history.push('/game')
-    })
+    function handlePlayClick(){
+        console.log('Clicked')
+        playerReady = true
+    }
+
     return(
         <div id="page-room">
             <Background>

@@ -1,37 +1,38 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react'
-import {Link, useLocation, useHistory} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 import Background from '../../components/background'
-//import SocketConnection from '../../services/socket-connection'
-import {useSocket} from '../../services/socket-connection'
+import api from '../../services/api'
 
 import './styles.css'
 function Title(){
-    //var socketConnection = new SocketConnection()
-    //const socket = socketConnection.conn()
-    const socket = useSocket()
-    const location = useLocation()
+    //const location = useLocation()
     const history = useHistory()
-    const user_object = location.state!=null?location.state.params:{}
+    const user_object = JSON.parse(localStorage.getItem('userData'))
     const [titleObject, setTitleObject] = useState({})
     console.log(JSON.stringify(user_object))
 
     useEffect(()=>{
-        socket.emit('titleRequest', user_object)
+        if(user_object == null){
+            history.push('/')
+        }else{
+            try{
+                api.post('titleRequest', user_object).then(response => {
+                    setTitleObject(response.data)
+                })
+            }catch(err){
+                console.log(err)
+                history.push('/')
+            }
+        }
         // eslint-disable-next-line
     }, [])
 
-    socket.on('message', message => {
-        console.log(`[${socket.id}]:${message}`)
-    })
-
-    socket.on('titleMessage', message=> {
-        setTitleObject(message)
-    })
 
     function handleEnterRoom(){
-        socket.emit('enterRoom', {roomId: 1})
-        history.push('/room', {params: 1})
+        //socket.emit('enterRoom', {roomId: 1})
+        localStorage.setItem('roomId', 1)
+        history.push('/room')
     }
 
 

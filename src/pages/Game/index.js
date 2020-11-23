@@ -2,21 +2,31 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useHistory } from 'react-router-dom'
 import { gsap } from 'gsap'
 import Background from '../../components/background'
-//import SocketConnection from '../../services/socket-connection'
-import {useSocket} from '../../services/socket-connection'
+import api from '../../services/api'
+
 import './styles.css';
 
 var interval
-
+var clientInterval
+var started = false
+var responded = false
+var points = 0
+var round = 0
 function Game() {
-	// var socketConnection = new SocketConnection()
-	// const socket = socketConnection.conn()
-	const socket = useSocket()
+	const user_object = JSON.parse(localStorage.getItem('userData'))
+    const roomId = localStorage.getItem('roomId')
 	const history = useHistory()
-	const [round, setRound] = useState(0)
 	const [timerValue, setTimerValue] = useState(10)
 	const correctRef = useRef(null)
 	const wrongRef = useRef(null)
+	const [score, setScore] = useState({
+		player: 0,
+		adversary: 0
+	})
+	const [playerNames, setPlayerNames] = useState({
+		player: '',
+		adversary: '',
+	})
 	const [question, setQuestion] = useState({
 		id: 0,
 		question: '',
@@ -28,79 +38,81 @@ function Game() {
 	const [bd, setBd] = useState({})
 
 	useEffect(()=>{
-        socket.emit('gameRequest', {})
-        // eslint-disable-next-line
-    }, [])
+		if(user_object != null){
+            interval = setInterval(keepAlive, 1000)
+        }else{
+            history.push('/')
+        }
+		//eslint-disable-next-line
+	}, [])
+	function keepAlive(){
+		try{
+			api.post('keepPlayerAliveGame', 
+			{
+				user_object, responded, points, round
+			}).then(response=>{
+				if(!started){
+					setBd(response.data.questions)
+					setQuestion(response.data.questions[round])
+					console.log(`UO:${user_object} - {${JSON.stringify(user_object)}}`)
+					console.log(`id:${response.data.player_1.id}vs${user_object.id} || ${typeof response.data.player_1.id} vs ${typeof user_object.id}`)
+					if(response.data.player_1.id === user_object.id){
+						setPlayerNames({
+							player: response.data.player_1.login,
+							adversary: response.data.player_2.login
+						})
+					}else{
+						setPlayerNames({
+							player: response.data.player_2.login,
+							adversary: response.data.player_1.login
+						})
+					}
+					startTimer()
+					started = true
+				}else{
+					const game = response.data
+					if(response.data.player_1.id === user_object.id){
+						setScore({
+							player:  game.player1Points,
+							adversary:  game.player2Points
+						})
+					}else{
+						setScore({
+							player:  game.player2Points,
+							adversary:  game.player1Points
+						})
+					}
+					if(game.currentRound!== round){
+						responded = false
+						if(game.currentRound === 7){//match over
 
-	socket.on('GameStarted', message => {
-		console.log(JSON.stringify(message))
-		setBd(message.questions)
-		setQuestion(message.questions[round])
-		if(message.player_1.socketId === socket.id){
-			setPlayerNames({
-				player: message.player_1.login,
-				adversary: message.player_2.login
-			})
-		}else{
-			setPlayerNames({
-				player: message.player_2.login,
-				adversary: message.player_1.login
-			})
-		}
-		startTimer()
-	})
-	var playerResponded = false
-	socket.once('playerResponded', message => {
-		if(playerResponded === false){
-			playerResponded = true
-			console.log('Player Responded' + playerResponded)
-			if(message.player_1.socketId === socket.id){
-				setScore({
-					...score,
-					adversary: message.player2Points
-				})
-			}else{
-				setScore({
-					...score,
-					adversary: message.player1Points
-				})
-			}
-		}
-	})
-	socket.once('NextRound', async(game)=>{
-		console.log('Next Round received')
-		if(round<6){
-			playerResponded = false
-			await setRound(round + 1)
-			setQuestion(game.questions[round])
-			startTimer()
-		}
-	})
+						}else{
+							round = game.currentRound
+							setTimeout(()=>{
+								clearInterval(clientInterval)
+								startTimer()
+								setQuestion(response.data.questions[game.currentRound])
+							}, 
+							2000)
+						}
+					}
+				}	
+            })
+        }catch(err){
+            console.log(err)
+            history.push('/')
+        }
+	}
 
-
-	const [score, setScore] = useState({
-	  player: 0,
-	  adversary: 0
-	})
-	const [playerNames, setPlayerNames] = useState({
-		player: '',
-		adversary: '',
-	})
-
-
-	// useEffect(() => {
-	// 	setQuestion(bd[round])
-	// }, [round, bd])
-	//var interval
 	function startTimer() {
 		const now = new Date().getTime() //receive from server later
 		const countdownTime = now + 10000; //10s
-		interval = setInterval(() => {
+		clientInterval = setInterval(() => {
 			const now = new Date().getTime()
 			const distance = countdownTime - now
 			const value = (distance / 1000).toFixed(1)
 			if (distance < 0) {
-				clearInterval(interval)
+				clearInterval(clientInterval)
 			} else {
 				setTimerValue(value)
 			}
@@ -108,25 +120,18 @@ function Game() {
 	}
 
 	async function handleSelection(choice) {
-		await clearInterval(interval)
 		const time = timerValue
-		//console.log(choice)
 		if (choice === question.correctAnswer) {
+			points+=10 + Math.floor(time)
 			await setScore({
 				...score,
 				player: score.player + 10 + Math.floor(time)
 			})
-			socket.emit('playerResponded', {
-				points: score.player
-			})
+			responded = true
 			await gsap.to(correctRef.current, { duration: 0.8, background: 'green' })
 			await gsap.to(correctRef.current, { duration: 0.8, background: 'white' })
-			
-			//alert('Correto!')
 		} else {
-			socket.emit('playerResponded', {
-				points: score.player
-			})
+			responded = true
 			gsap.to('.item', { duration: 0.8, background: 'red' })
 			await gsap.to(correctRef.current, { duration: 0.8, background: 'green' })
 			gsap.to('.item', { duration: 0.8, background: 'white' })

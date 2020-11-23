@@ -10,7 +10,7 @@ const usersController = new UsersController()
 routes.get('/quiz', questionsController.getQuiz)
 routes.post('/services-login', usersController.login)
 
-routes.get('*', function(req, res){
-    res.redirect('/')
-})
+// routes.get('*', function(req, res){
+//     res.redirect('/')
+// })
 module.exports = routes

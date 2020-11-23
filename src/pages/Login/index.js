@@ -13,6 +13,7 @@ function Login(){
     function handleLogin(){
         try{
             api.post('services-login', loginForm).then(response => {
+                localStorage.setItem('userData', JSON.stringify(response.data))
                 history.push('/title', {params: response.data})
             }).catch(function (error) {
                 if (error.response) {
