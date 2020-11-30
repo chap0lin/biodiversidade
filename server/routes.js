@@ -9,6 +9,7 @@ const usersController = new UsersController()
 
 routes.get('/quiz', questionsController.getQuiz)
 routes.post('/services-login', usersController.login)
+routes.post('/services-signup', usersController.signup)
 
 // routes.get('*', function(req, res){
 //     res.redirect('/')

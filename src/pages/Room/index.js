@@ -26,6 +26,7 @@ function Room(){
                 setRoomObject(response.data)
                 if(response.data.started){
                     clearInterval(interval)
+                    playerReady = false
                     history.push('/game')
                 }
             })

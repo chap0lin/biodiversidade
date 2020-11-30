@@ -6,9 +6,15 @@ import './styles.css'
 
 function Login(){
     const history = useHistory()
+    const [signupMode, setSignupMode] = useState(false)
     const [loginForm, setLoginForm] = useState({
         login: '',
         password: '',
+    })
+    const [signupForm, setSignupForm] = useState({
+        login: '',
+        password: '',
+        confirm: ''
     })
     function handleLogin(){
         try{
@@ -30,9 +36,45 @@ function Login(){
         }
         
     }
+    function handleSignup(){
+        if(signupForm.login.length < 3){
+            alert('Nome de usuário muito curto!')
+        }else if(signupForm.password.length<6){
+            alert('Senha muito curta!')
+        }else if(signupForm.password !== signupForm.confirm){
+            alert('As senhas não coincidem!')
+        }else{
+            try{
+                api.post('services-signup', signupForm).then(response => {
+                    //localStorage.setItem('userData', JSON.stringify(response.data))
+                    //history.push('/title', {params: response.data})
+                    alert('Usuário Cadastrado!')
+                    setSignupMode(false)
+                }).catch(function (error) {
+                    if (error.response) {
+                      // Request made and server responded
+                      console.log(error.response.status);
+                      alert(error.response.data.message)
+                    }else {
+                      // Something happened in setting up the request that triggered an Error
+                      console.log('2Error', error.message);
+                    }
+                })
+            }catch(error){
+                console.log('3' + error)
+            }
+        }
+    }
     function handleInputChange(event){
         const {name, value} = event.target
         setLoginForm({...loginForm, [name]: value})
+    }
+    function handleInputChangeSignup(event){
+        const {name, value} = event.target
+        setSignupForm({...signupForm, [name]: value})
+    }
+    function switchSignupMode(event){
+        setSignupMode(!signupMode)
     }
     return(
         <div id="page-login" style={{background: 'green'}}>
@@ -48,20 +90,39 @@ function Login(){
                     <circle id="Elipse_2" data-name="Elipse 2" cx="1.5" cy="1.5" r="1.5" transform="translate(187 59)" fill="#fff"/>
                 </svg>
                 </div>
-                <div className="login-container">
+                <div className={`login-container ${signupMode?'invisible':''}`}>
                     <h2 className="container-title">Entrar</h2>
                     <div className="input-field">
                         <input type="text" name="login" placeholder="nome de usuário"
                         onChange={handleInputChange} />
                     </div>
                     <div className="input-field">
-                        <input type="text" name="password" placeholder="senha"
+                        <input type="password" name="password" placeholder="senha"
                         onChange={handleInputChange} />
                     </div>
                     
                     <button onClick={handleLogin}>ENTRAR</button>
                     
-                    <p>Não possui conta? Cadastre-se</p>
+                    <p onClick={switchSignupMode}>Não possui conta? Cadastre-se</p>
+                </div>
+                <div className={`login-container ${signupMode?'':'invisible'}`}>
+                    <h2 className="container-title">Cadastrar</h2>
+                    <div className="input-field">
+                        <input type="text" name="login" placeholder="nome de usuário"
+                        onChange={handleInputChangeSignup} />
+                    </div>
+                    <div className="input-field">
+                        <input type="password" name="password" placeholder="senha"
+                        onChange={handleInputChangeSignup} />
+                    </div>
+                    <div className="input-field">
+                        <input type="password" name="confirm" placeholder="confirmar senha"
+                        onChange={handleInputChangeSignup} />
+                    </div>
+                    
+                    <button onClick={handleSignup}>CADASTRAR</button>
+                    
+                    <p onClick={switchSignupMode}>Já possui conta? Entre</p>
                 </div>
                 <div className="anon-container">
                     <h2 className="container-title">Não quer criar conta?</h2>

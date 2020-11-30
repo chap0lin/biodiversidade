@@ -19,6 +19,24 @@ class UsersController{
             console.log(error)
         }
     }
+    async signup(request, response){
+        const {login, password} = request.body
+        console.log(JSON.stringify(request.body))
+        const user_data = await knex('users').select('*').where('login', String(login))
+        if(user_data.length>0){
+            response.status(400).json({message: 'O nome de usuário já existe!'})
+        }else{
+            await knex('users').insert({
+                login,
+                password
+            })
+            response.json({
+                message: 'Usuario criado com sucesso!'
+            })
+        }
+        
+        
+    }
 }
 
 module.exports = UsersController

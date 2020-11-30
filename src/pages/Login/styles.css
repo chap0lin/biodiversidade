@@ -4,6 +4,10 @@
     flex-direction: column;
     align-items: center;
 }
+#page-login div{
+    display: flex;
+    flex-direction: column;
+}
 #page-login .logo-container{
     align-self: center;
     margin-top: 30px
@@ -65,6 +69,7 @@
 }
 
 #page-login .anon-container{
+    align-self: center;
     display: flex;
     flex-direction: column;
     width: 320px;
@@ -88,4 +93,8 @@
     color: white;
     font-size: 16px;
     
+}
+
+#page-login .invisible{
+    display: none;
 }

@@ -14,7 +14,7 @@ var points = 0
 var round = 0
 function Game() {
 	const user_object = JSON.parse(localStorage.getItem('userData'))
-    const roomId = localStorage.getItem('roomId')
+    //const roomId = localStorage.getItem('roomId')
 	const history = useHistory()
 	const [timerValue, setTimerValue] = useState(10)
 	const correctRef = useRef(null)
@@ -35,8 +35,9 @@ function Game() {
 		],
 		correctAnswer: 0
 	})
-	const [bd, setBd] = useState({})
-
+	//const [bd, setBd] = useState({})
+	const [gameEnded, setGameEnded] = useState(false)
+	const [winner, setWinner] = useState('')
 	useEffect(()=>{
 		if(user_object != null){
             interval = setInterval(keepAlive, 1000)
@@ -52,7 +53,7 @@ function Game() {
 				user_object, responded, points, round
 			}).then(response=>{
 				if(!started){
-					setBd(response.data.questions)
+					//setBd(response.data.questions)
 					setQuestion(response.data.questions[round])
 					console.log(`UO:${user_object} - {${JSON.stringify(user_object)}}`)
 					console.log(`id:${response.data.player_1.id}vs${user_object.id} || ${typeof response.data.player_1.id} vs ${typeof user_object.id}`)
@@ -85,7 +86,17 @@ function Game() {
 					if(game.currentRound!== round){
 						responded = false
 						if(game.currentRound === 7){//match over
-
+							setGameEnded(true)
+							if(response.data.player_1.id === user_object.id){
+								setWinner(game.player1Points>game.player2Points?'player':game.player1Points === game.player2Points?'tie':'adversary')
+							}else{
+								setWinner(game.player2Points>game.player1Points?'player':game.player2Points === game.player1Points?'tie':'adversary')
+							}
+							clearInterval(interval)
+							started = false
+							responded = false
+							points = 0
+							round = 0
 						}else{
 							round = game.currentRound
 							setTimeout(()=>{
@@ -106,13 +117,16 @@ function Game() {
 
 	function startTimer() {
 		const now = new Date().getTime() //receive from server later
-		const countdownTime = now + 10000; //10s
+		const countdownTime = now + 20000; //10s
 		clientInterval = setInterval(() => {
 			const now = new Date().getTime()
 			const distance = countdownTime - now
-			const value = (distance / 1000).toFixed(1)
+			const value = (distance / 1000).toFixed(0)
 			if (distance < 0) {
 				clearInterval(clientInterval)
+				if(!responded){
+					responded = true
+				}
 			} else {
 				setTimerValue(value)
 			}
@@ -153,7 +167,26 @@ function Game() {
 						<circle id="Elipse_2" data-name="Elipse 2" cx="1" cy="1" r="1" transform="translate(55 16)" fill="#fff"/>
 					</svg>
 				</div>
-				<div className="game-container">
+				<div className={`end-container  ${gameEnded?'':'sumiu'}`}>
+					<h2>Fim de Jogo!</h2>
+					<h2>{winner==='player'?'Vitória!':winner==='adversary'?'Derrota!':'Empate!'}</h2>
+					<div className="players-container">
+						<div className={`player ${winner==='player'?'winner':winner==='tie'?'tie':''}`}>
+							<h1 className="big-name">{playerNames.player}</h1>
+							<h2 className="big-points">{score.player}</h2>
+						</div>
+						<div className="vs">
+							<h2>VS</h2>
+						</div>
+						<div className={`player ${winner==='adversary'?'winner':winner==='tie'?'tie':''}`}>
+							<h1 className="big-name">{playerNames.adversary}</h1>
+							<h2 className="big-points">{score.adversary}</h2>
+						</div>
+					</div>
+					<button>Voltar para a Sala</button>
+					
+				</div>
+				<div className={`game-container ${gameEnded?'sumiu':''}`}>
 					<div className="scoreboard">
 						<div className="player-one">
 							<p>{playerNames.player}</p>
