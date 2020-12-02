@@ -117,7 +117,7 @@ function Game() {
 
 	function startTimer() {
 		const now = new Date().getTime() //receive from server later
-		const countdownTime = now + 20000; //10s
+		const countdownTime = now + 20000; //20s
 		clientInterval = setInterval(() => {
 			const now = new Date().getTime()
 			const distance = countdownTime - now

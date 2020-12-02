@@ -39,6 +39,11 @@ function Room(){
         console.log('Clicked')
         playerReady = true
     }
+    function handleGoBack(){
+        clearInterval(interval)
+        playerReady = false
+        history.push('/title')
+    }
 
     return(
         <div id="page-room">
@@ -75,9 +80,7 @@ function Room(){
                     </div>
                     <button onClick={handlePlayClick}>JOGAR</button>
                 </div>
-                <Link to="/title" >
-                    <h2>Voltar</h2>
-                </Link>
+                <h2 onClick={handleGoBack}>Voltar</h2>
             </Background>
         </div>
     )

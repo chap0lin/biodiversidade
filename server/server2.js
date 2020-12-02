@@ -4,6 +4,7 @@ const cors = require('cors')
 const routes = require('./routes')
 
 const QuestionsController = require('./Controllers/QuestionsController')
+const { use } = require('./routes')
 const questionsController = new QuestionsController()
 
 const app = express()
@@ -31,6 +32,7 @@ var titleObject = {
         }
     ],
 }
+var hasGamePendent = -1
 var games = []
 // var game = {
 //     started:false,
@@ -55,7 +57,11 @@ app.post('/titleRequest', async(req, res) => {
             }
         })
         if(newPlayer){
-            players.push({...user_object})
+            players.push({
+                ...user_object,
+                updatedAt: new Date().getTime(),
+                inGame: false,
+            })
             console.log(`New player: ${user_object.login}`)
         }
         res.json(titleObject)
@@ -69,45 +75,100 @@ app.post('/keepPlayerAliveRoom', async(req, res) => {
     const roomId = req.body.roomId
     const user_object = req.body.user_object
     const ready = JSON.parse(req.body.ready)
+    //console.log('Alive[' + user_object.login + ']')
+    console.log(JSON.stringify(players))
+    const playerIndex = await getPlayer(user_object.id)
 
-    var game = getGame(user_object.id)
-    //console.log('Alive (' + ready + ')')
-    if(!game.generated){
-
-        var newPlayer = true
-        await titleObject.rooms[0].players.map(player => {
-            if(user_object.id === player.id){
-                newPlayer = false
-            }
-        })
-        if(newPlayer){
-            //console.log(`[${user_object.login}] just joined the room: ${roomId}`)
-            titleObject.rooms[0].n_players+=1
-            titleObject.rooms[0].players.push({...user_object})
+    if(ready){
+        if(hasGamePendent !== -1 && games[hasGamePendent].player1.id !== user_object.id){
+            games[hasGamePendent].player2 = user_object
+            games[hasGamePendent].generated = true
+            tooglePlayerInGameStatus(games[hasGamePendent].player1.id)
+            tooglePlayerInGameStatus(games[hasGamePendent].player2.id)
+            hasGamePendent = -1
+        }else if(hasGamePendent === -1){
+            hasGamePendent = games.push({
+                started:false,
+                generated: false,
+                player_1: user_object,
+                player_2: null,
+                questions: null,
+                player1Responded: false,
+                player2Responded: false,
+                player1Points: 0,
+                player2Points: 0,
+                currentRound: 0
+            })
         }
-
-
-        if(ready){
-            //console.log('Player Ready')
-            if(game.player_1===null){
-
-                game.player_1 = user_object
-
-            }else if(game.player_2===null && game.player_1.id !== user_object.id){
-
-                game.player_2 = user_object
-                game.generated = true
-
-            }
+    }else{
+        if(hasGamePendent!== -1 && games[hasGamePendent].player1.id === user_object.id){ //unready
+            games.splice(hasGamePendent-1,1)
+            hasGamePendent = -1;
         }
     }
-    
+    //room update - get players with updatedAt - 5s  - else remove from players - room count
+    var updatedPlayers = []
+    var now = new Date().getTime()
+    players.map(player => {
+        if( (now - player.updatedAt)<=5000){
+            updatedPlayers.push(player)
+        }
+    })
+    players = updatedPlayers
+
+    const gameIndex = await getGame(user_object.id)
+    //format and send
     res.json({
-        started: game.generated,
+        started: gameIndex!==-1?games[gameIndex].generated:false,
         id: 1,
         name: 'Sala Geral 1',
-        players
+        players: updatedPlayers
     })
+
+
+
+
+
+
+
+    //var game = getGame(user_object.id)
+    //console.log('Alive (' + ready + ')')
+    // if(!game.generated){
+
+    //     var newPlayer = true
+    //     await titleObject.rooms[0].players.map(player => {
+    //         if(user_object.id === player.id){
+    //             newPlayer = false
+    //         }
+    //     })
+    //     if(newPlayer){
+    //         //console.log(`[${user_object.login}] just joined the room: ${roomId}`)
+    //         titleObject.rooms[0].n_players+=1
+    //         titleObject.rooms[0].players.push({...user_object})
+    //     }
+
+
+    //     if(ready){
+    //         //console.log('Player Ready')
+    //         if(game.player_1===null){
+
+    //             game.player_1 = user_object
+
+    //         }else if(game.player_2===null && game.player_1.id !== user_object.id){
+
+    //             game.player_2 = user_object
+    //             game.generated = true
+
+    //         }
+    //     }
+    // }
+    
+    // res.json({
+    //     started: game.generated,
+    //     id: 1,
+    //     name: 'Sala Geral 1',
+    //     players
+    // })
     
 })
 
@@ -116,51 +177,74 @@ app.post('/keepPlayerAliveGame', async (req, res) => {
     const responded = req.body.responded
     const points = JSON.parse(req.body.points)
     const round = JSON.parse(req.body.round)
-    var game = getGame(user_object.id)
-
-    if(game.started === 1){ // segunda++ requisicao recebida
+    var gameIndex = await getGame(user_object.id)
+    const playerIndex = await getPlayer(user_object.id)
+    if(games[gameIndex].started === 1){ // segunda++ requisicao recebida
         
         //console.log(`GameAlive! (${responded}) - [${points}]`)
         if(responded){
             console.log('respondeu' + points)
-            if(game.player_1.id === user_object.id){
-                game.player1Responded = true
-                game.player1Points = points
+            if(games[gameIndex].player_1.id === user_object.id){
+                games[gameIndex].player1Responded = true
+                games[gameIndex].player1Points = points
             }else{
-                game.player2Responded = true
-                game.player2Points = points
+                games[gameIndex].player2Responded = true
+                games[gameIndex].player2Points = points
             }
-            if(game.player1Responded && game.player2Responded){
-                if(round===game.currentRound){
-                    game.currentRound++
-                    console.log('Now next round' + game.currentRound)
+            if(games[gameIndex].player1Responded && games[gameIndex].player2Responded){
+                if(round===games[gameIndex].currentRound){
+                    games[gameIndex].currentRound++
+                    console.log('Now next round' + games[gameIndex].currentRound)
                 }else{
-                    if(game.currentRound===7){ //ended
+                    if(games[gameIndex].currentRound===7){ //ended
                         console.log('Game Ended')
-                        res.json(game)
-                        gameEnded()
+                        res.json(games[gameIndex])
+                        tooglePlayerInGameStatus(games[gameIndex].player1.id)
+                        tooglePlayerInGameStatus(games[gameIndex].player2.id)
+                        games.splice(gameIndex, 1)
+                        //gameEnded()
                         return
                     }
-                    game.player1Responded = false
-                    game.player2Responded = false
+                    games[gameIndex].player1Responded = false
+                    games[gameIndex].player2Responded = false
                 }
             }
         }
     }else{
-        game.started = 1;
+        games[gameIndex].started = 1;
         const questions = await questionsController.getQuizQuestions()
-        game.currentQuestion = 0
-        game.questions = questions
+        games[gameIndex].currentQuestion = 0
+        games[gameIndex].questions = questions
         //console.log(JSON.stringify(game))
     }  
-    res.json(game)
+    res.json(games[gameIndex])
 })
 
+async function getPlayer(playerId){
+    var output = -1
+    const now = new Date().getTime()
+    players.map((player, index) => {
+        if(player.id === playerId){
+            player.updatedAt = now
+            output = index
+            return
+        }   
+    })
+    return output
+}
+
+async function tooglePlayerInGameStatus(playerId){
+    players.map(player => {
+        player.inGame = !player.inGame
+    })
+}
+
+
 async function getGame(playerId){
-    var output = {generated: false}
-    games.map(game => {
+    var output = -1
+    games.map((game, index) => {
         if((game.player_1!==null && game.player_1.id === playerId) || (game.player_2!==null && game.player_2.id === playerId)){
-            output = game
+            output = index
             return
         }
     })
