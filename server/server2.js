@@ -50,20 +50,20 @@ var games = []
 app.post('/titleRequest', async(req, res) => {
     const user_object = req.body
     if(user_object != null && user_object != {}){
-        var newPlayer = true
-        await players.map(player => {
-            if(user_object.id === player.id){
-                newPlayer = false
-            }
-        })
-        if(newPlayer){
-            players.push({
-                ...user_object,
-                updatedAt: new Date().getTime(),
-                inGame: false,
-            })
-            console.log(`New player: ${user_object.login}`)
-        }
+        // var newPlayer = true
+        // await players.map(player => {
+        //     if(user_object.id === player.id){
+        //         newPlayer = false
+        //     }
+        // })
+        // if(newPlayer){
+        //     players.push({
+        //         ...user_object,
+        //         updatedAt: new Date().getTime(),
+        //         inGame: false,
+        //     })
+        //     console.log(`New player: ${user_object.login}`)
+        // }
         res.json(titleObject)
     }else{
         res.status(400).send({message: 'Erro! user_object não identificado!'})
@@ -76,18 +76,26 @@ app.post('/keepPlayerAliveRoom', async(req, res) => {
     const user_object = req.body.user_object
     const ready = JSON.parse(req.body.ready)
     //console.log('Alive[' + user_object.login + ']')
-    console.log(JSON.stringify(players))
-    const playerIndex = await getPlayer(user_object.id)
-
+    //console.log(JSON.stringify(players))
+    const playerIndex = await getPlayer(user_object)
+    //console.log(`gp: ${hasGamePendent}[]:${games.length>0?JSON.stringify(games[hasGamePendent]):JSON.stringify(games)}`)
     if(ready){
-        if(hasGamePendent !== -1 && games[hasGamePendent].player1.id !== user_object.id){
-            games[hasGamePendent].player2 = user_object
+        if(hasGamePendent !== -1 && games[hasGamePendent].player_1.id !== user_object.id){
+            games[hasGamePendent].player_2 = user_object
             games[hasGamePendent].generated = true
-            tooglePlayerInGameStatus(games[hasGamePendent].player1.id)
-            tooglePlayerInGameStatus(games[hasGamePendent].player2.id)
+            tooglePlayerInGameStatus(games[hasGamePendent].player_1.id)
+            tooglePlayerInGameStatus(games[hasGamePendent].player_2.id)
             hasGamePendent = -1
         }else if(hasGamePendent === -1){
-            hasGamePendent = games.push({
+            const alreadyInGame = await getGame(user_object.id)
+            if(alreadyInGame!==-1){
+                res.json({
+                    started: true,
+                })
+                return
+            }
+            console.log('Game Created')
+            hasGamePendent = -1 + games.push({ 
                 started:false,
                 generated: false,
                 player_1: user_object,
@@ -101,7 +109,7 @@ app.post('/keepPlayerAliveRoom', async(req, res) => {
             })
         }
     }else{
-        if(hasGamePendent!== -1 && games[hasGamePendent].player1.id === user_object.id){ //unready
+        if(hasGamePendent!== -1 && games[hasGamePendent].player_1.id === user_object.id){ //unready
             games.splice(hasGamePendent-1,1)
             hasGamePendent = -1;
         }
@@ -117,6 +125,7 @@ app.post('/keepPlayerAliveRoom', async(req, res) => {
     players = updatedPlayers
 
     const gameIndex = await getGame(user_object.id)
+    console.log(`[${user_object.login}] gi:${gameIndex} - ${gameIndex!==-1?JSON.stringify(games[gameIndex].generated):'nulo'}`)
     //format and send
     res.json({
         started: gameIndex!==-1?games[gameIndex].generated:false,
@@ -178,7 +187,7 @@ app.post('/keepPlayerAliveGame', async (req, res) => {
     const points = JSON.parse(req.body.points)
     const round = JSON.parse(req.body.round)
     var gameIndex = await getGame(user_object.id)
-    const playerIndex = await getPlayer(user_object.id)
+    const playerIndex = await getPlayer(user_object)
     if(games[gameIndex].started === 1){ // segunda++ requisicao recebida
         
         //console.log(`GameAlive! (${responded}) - [${points}]`)
@@ -199,8 +208,8 @@ app.post('/keepPlayerAliveGame', async (req, res) => {
                     if(games[gameIndex].currentRound===7){ //ended
                         console.log('Game Ended')
                         res.json(games[gameIndex])
-                        tooglePlayerInGameStatus(games[gameIndex].player1.id)
-                        tooglePlayerInGameStatus(games[gameIndex].player2.id)
+                        tooglePlayerInGameStatus(games[gameIndex].player_1.id)
+                        tooglePlayerInGameStatus(games[gameIndex].player_2.id)
                         games.splice(gameIndex, 1)
                         //gameEnded()
                         return
@@ -220,22 +229,30 @@ app.post('/keepPlayerAliveGame', async (req, res) => {
     res.json(games[gameIndex])
 })
 
-async function getPlayer(playerId){
+async function getPlayer(playerObj){
     var output = -1
     const now = new Date().getTime()
-    players.map((player, index) => {
-        if(player.id === playerId){
+    await players.map((player, index) => {
+        if(player.id === playerObj.id){
             player.updatedAt = now
             output = index
             return
         }   
     })
-    return output
+    if(output === -1){
+        output = players.push({
+            ...playerObj,
+            updatedAt: new Date().getTime(),
+            inGame: false,
+        })
+    }
+    return output - 1
 }
 
 async function tooglePlayerInGameStatus(playerId){
     players.map(player => {
-        player.inGame = !player.inGame
+        if(player.id === playerId)
+            player.inGame = !player.inGame
     })
 }
 

@@ -12,6 +12,7 @@ function Room(){
     
     const history = useHistory()
     const [roomObject, setRoomObject] = useState({})
+    const [inQueue, setInQueue] = useState(false)
     useEffect(()=>{
         if(user_object != null && roomId != null){
             interval = setInterval(keepAlive, 1000)
@@ -37,7 +38,14 @@ function Room(){
     }
     function handlePlayClick(){
         console.log('Clicked')
-        playerReady = true
+        if(playerReady){
+            setInQueue(false)
+            playerReady = false
+        }else{
+            setInQueue(true)
+            playerReady = true
+        }
+            
     }
     function handleGoBack(){
         clearInterval(interval)
@@ -72,13 +80,13 @@ function Room(){
                                 <div className="player-item" key={player.id}>
                                     <p>{player.login}</p>
                                     <p>{player.points_w}</p>
-                                <div className="ocupado"></div>
+                                <div className={`${player.inGame?'ocupado':'disponivel'}`}></div>
                         </div>
                             ))
                         }
                         
                     </div>
-                    <button onClick={handlePlayClick}>JOGAR</button>
+                    <button onClick={handlePlayClick}>{inQueue?'CANCELAR':'JOGAR'}</button>
                 </div>
                 <h2 onClick={handleGoBack}>Voltar</h2>
             </Background>
