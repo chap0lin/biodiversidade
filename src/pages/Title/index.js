@@ -34,6 +34,9 @@ function Title(){
         localStorage.setItem('roomId', 1)
         history.push('/room')
     }
+    function handleEnterTraining(){
+        history.push('/training')
+    }
 
 
     return(
@@ -51,25 +54,8 @@ function Title(){
                     </svg>
                 </div>
                 <div className="rooms-container">
-                    <h2 className="title">Salas</h2>
-                    <input type="text" placeholder="busque por nome" />
-                    <div className="room-list">
-                        <div className="list-header">
-                            <p>Nome da Sala</p>
-                            <p>Jogadores</p>
-                        </div>
-                        {titleObject.rooms!=null &&
-                            titleObject.rooms.map(room => (
-                                <div className="room-item" key={room.id}>
-                                    <p>{room.name}</p>
-                                    <p>{`${room.n_players}/${room.size}`}</p>
-                                </div>
-                            ))
-                        
-                        }
-                        
-                    </div>
-                    <button onClick={handleEnterRoom}>ENTRAR NA SALA</button>
+                    <button onClick={handleEnterRoom}>JOGAR</button>
+                    <button onClick={handleEnterTraining}>PRATICAR</button>
                 </div>
                 <div className="buttons-container">
                     <button>CRIAR SALA</button>

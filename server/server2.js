@@ -22,48 +22,16 @@ var titleObject = {
             size: 50,
             n_players: 0,
             players: []
-        },
-        {
-            id: 2,
-            name: 'Sala Geral 2',
-            size: 50,
-            n_players: 0,
-            players: []
         }
     ],
 }
 var hasGamePendent = -1
 var games = []
-// var game = {
-//     started:false,
-//     generated: false,
-//     player_1: null,
-//     player_2: null,
-//     questions: null,
-//     player1Responded: false,
-//     player2Responded: false,
-//     player1Points: 0,
-//     player2Points: 0,
-//     currentRound: 0
-// }
+
 
 app.post('/titleRequest', async(req, res) => {
     const user_object = req.body
     if(user_object != null && user_object != {}){
-        // var newPlayer = true
-        // await players.map(player => {
-        //     if(user_object.id === player.id){
-        //         newPlayer = false
-        //     }
-        // })
-        // if(newPlayer){
-        //     players.push({
-        //         ...user_object,
-        //         updatedAt: new Date().getTime(),
-        //         inGame: false,
-        //     })
-        //     console.log(`New player: ${user_object.login}`)
-        // }
         res.json(titleObject)
     }else{
         res.status(400).send({message: 'Erro! user_object não identificado!'})
@@ -133,52 +101,6 @@ app.post('/keepPlayerAliveRoom', async(req, res) => {
         name: 'Sala Geral 1',
         players: updatedPlayers
     })
-
-
-
-
-
-
-
-    //var game = getGame(user_object.id)
-    //console.log('Alive (' + ready + ')')
-    // if(!game.generated){
-
-    //     var newPlayer = true
-    //     await titleObject.rooms[0].players.map(player => {
-    //         if(user_object.id === player.id){
-    //             newPlayer = false
-    //         }
-    //     })
-    //     if(newPlayer){
-    //         //console.log(`[${user_object.login}] just joined the room: ${roomId}`)
-    //         titleObject.rooms[0].n_players+=1
-    //         titleObject.rooms[0].players.push({...user_object})
-    //     }
-
-
-    //     if(ready){
-    //         //console.log('Player Ready')
-    //         if(game.player_1===null){
-
-    //             game.player_1 = user_object
-
-    //         }else if(game.player_2===null && game.player_1.id !== user_object.id){
-
-    //             game.player_2 = user_object
-    //             game.generated = true
-
-    //         }
-    //     }
-    // }
-    
-    // res.json({
-    //     started: game.generated,
-    //     id: 1,
-    //     name: 'Sala Geral 1',
-    //     players
-    // })
-    
 })
 
 app.post('/keepPlayerAliveGame', async (req, res) => {

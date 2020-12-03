@@ -5,6 +5,7 @@ import Login from './pages/Login'
 import Title from './pages/Title'
 import Room from './pages/Room'
 import Game from './pages/Game'
+import Training from './pages/Training'
 
 function Routes(){
     return(
@@ -13,6 +14,7 @@ function Routes(){
             <Route path="/title" component={Title} />
             <Route path="/room" component={Room} />
             <Route path="/game" component={Game} />
+            <Route path="/training" component={Training} />
         </BrowserRouter>
     )
 }

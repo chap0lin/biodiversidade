@@ -14,33 +14,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap:20px;
     border: 1px solid gray;
-    padding: 10px;
+    padding: 20px;
     background: rgba(0,0,0,0.1);
     border-radius: 50px;
     width: 300px;
-}
-#page-title .rooms-container .title{
-    text-align: center;
-    color: white;
-}
-#page-title .rooms-container input{
-    background: rgba(0,0,0,0.1);
-    outline: none;
-    box-shadow: transparent;
-    border: 0;
-    color: white;
-}
-#page-title .rooms-container .room-list .list-header{
-    display: flex;
-    justify-content: space-between;
-    width: 260px;
-    color: white;
-}
-#page-title .rooms-container .room-list .room-item{
-    display: flex;
-    justify-content: space-between;
-    color: white;
 }
 
 #page-title .rooms-container button{

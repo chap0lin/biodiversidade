@@ -1,0 +1,96 @@
+#game-screen{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+}
+#game-screen .logo-container{
+    margin-top: 15px
+}
+#game-screen .game-container{
+    padding: 20px;
+}
+#game-screen .game-container .scoreboard{
+    display: flex;
+    justify-content: space-around;
+}
+#game-screen .game-container .scoreboard .player-one p{
+    color: white;
+    font-size: 20px;
+}
+#game-screen .game-container .scoreboard .player-two p{
+    color: white;
+    font-size: 20px;
+}
+#game-screen .game-container .scoreboard .timer p{
+    color: white;
+    font-size: 20px;
+}
+
+
+#game-screen .game-container .question{
+    text-align: center;
+    color: white
+}
+#game-screen .game-container .answers{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+
+}
+#game-screen .game-container .answers .item{
+    border: 1px solid gray;
+    background: white;
+    
+}
+
+#game-screen .end-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+#game-screen .end-container h2{
+    color: white;
+    text-align: center;
+}
+
+#game-screen .end-container .players-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+#game-screen .end-container .players-container .winner{
+    background: #1A360C;
+    border-radius: 50%;
+    border: 3px solid rgba(255,255,255,0.1)
+}
+#game-screen .end-container .players-container .tie{
+    background: #1A360C;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.1)
+}
+
+
+
+
+#game-screen .end-container .player{
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#game-screen .end-container .player h1{
+    font-size: 26px;
+    max-width: 150px;
+}
+
+
+#game-screen .sumiu{
+    display: none;
+}
