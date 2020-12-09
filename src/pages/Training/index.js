@@ -43,6 +43,7 @@ function Training() {
     
     useEffect(() => {
         startTimer()
+        //eslint-disable-next-line
     }, [])
     //var interval
     function startTimer() {
@@ -60,6 +61,7 @@ function Training() {
                     startTimer()
                 }else{ //game over
                     setGameEnded(true)
+                    round = 0
                     clearInterval(interval)
                 }
             } else {
@@ -89,8 +91,14 @@ function Training() {
             startTimer()
         }else{ //game over
             setGameEnded(true)
+            round = 0
         }
 
+    }
+    function handleGoBack(){
+        clearInterval(interval)
+        round = 0
+        history.push('/title')
     }
 
     return (
@@ -129,9 +137,7 @@ function Training() {
 
                     </div>
                 </div>
-                <Link to="/title" >
-                    <h2>Sair</h2>
-                </Link>
+                <h2 onClick={handleGoBack}>Sair</h2>
             </Background>
         </div>
     );
