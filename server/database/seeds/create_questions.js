@@ -545,6 +545,206 @@ module.exports = {
                 option_4: 'representa mais de 10% do DNA celular',
                 answer: 3
             },
+            {
+                question: 'Células como os neurônios, com o mais alto grau de diferenciação e menor capacidade de regenerar, são chamadas ...',
+                option_1: 'estáveis',
+                option_2: 'lábeis',
+                option_3: 'federadas',
+                option_4: 'perenes',
+                answer: 3
+            },
+            {
+                question: 'Como são chamadas as células não diferenciadas, que podem continuar a se dividir por mitose, ou gerar células-filhas capazes de sofrer diferenciação em muitas categorias de células?',
+                option_1: 'células-tronco',
+                option_2: 'células-estáveis',
+                option_3: 'células-parentes',
+                option_4: 'células-flama',
+                answer: 0
+            },
+            {
+                question: 'O complexo processo, por meio do qual as células do corpo se especializam para desempenhar funções específicas, é chamado:',
+                option_1: 'diferenciação celular',
+                option_2: 'degeneração celular',
+                option_3: 'crescimento celular',
+                option_4: 'imortalidade celular',
+                answer: 0
+            },
+            {
+                question: 'Um conjunto de células realizando uma certa função é chamado ...',
+                option_1: 'aparelho',
+                option_2: 'órgão',
+                option_3: 'sistema',
+                option_4: 'tecido',
+                answer: 3
+            },
+            {
+                question: 'As mais conhecidas células-tronco adultas são encontradas na medula óssea. Como elas são chamadas?',
+                option_1: 'osteócitos',
+                option_2: 'células hematopoiéticas',
+                option_3: 'células germinativas',
+                option_4: 'células diferenciadas',
+                answer: 1
+            },
+            {
+                question: 'A terapia denominada transplante de células-tronco hematopoiéticas é mais popularmente conhecida como ...',
+                option_1: 'transplante de medula',
+                option_2: 'transplante autólogo',
+                option_3: 'transplante heterólogo',
+                option_4: 'transplante cruzado',
+                answer: 0
+            },
+            {
+                question: 'Nas ciências biológicas, o que estuda um histologista?',
+                option_1: 'a história da biologia',
+                option_2: 'os tecidos do corpo',
+                option_3: 'as funções dos órgãos',
+                option_4: 'os hormônios',
+                answer: 1
+            },
+            {
+                question: 'Quais são os tecidos com células justapostas, que podem atuar tanto no revestimento quanto na secreção?',
+                option_1: 'conjuntivos',
+                option_2: 'epiteliais',
+                option_3: 'musculares',
+                option_4: 'nervosos',
+                answer: 1
+            },
+            {
+                question: 'Como é chamada a capa membranosa, rica em lipídeos, produzida pelas células de Schwann ao redor do axônio de neurônios?',
+                option_1: 'bainha de mielina',
+                option_2: 'bainha de cefalina',
+                option_3: 'ampola de Vater',
+                option_4: 'ilhota de Langerhans',
+                answer: 0
+            },
+            {
+                question: 'Estágio do embrião constituído por cerca de 200 células, que se implanta no útero por volta do sexto dia após a fecundação:',
+                option_1: 'mórula',
+                option_2: 'blastocisto',
+                option_3: 'gástrula',
+                option_4: 'nêurula',
+                answer: 1
+            },
+            {
+                question: 'Qual dos seguintes NÃO é um tipo de leucócito?',
+                option_1: 'neutrófilo',
+                option_2: 'trombócito',
+                option_3: 'linfócito',
+                option_4: 'monócito',
+                answer: 1
+            },
+            {
+                question: 'Quais os elementos figurados do sangue relacionados ao processo de coagulação sanguínea?',
+                option_1: 'eritrócitos',
+                option_2: 'leucócitos',
+                option_3: 'plaquetas',
+                option_4: 'metamielócitos',
+                answer: 2
+            },
+            {
+                question: 'Tipo de tecido conjuntivo que acumula reserva energética na forma de gordura:',
+                option_1: 'tecido adiposo',
+                option_2: 'tecido cartilaginoso',
+                option_3: 'tecido hematopopoiético',
+                option_4: 'tecido ósseo',
+                answer: 0
+            },
+            {
+                question: 'Como é chamada a terapia celular quando as células são aplicadas no mesmo indivíduo do qual são provenientes?',
+                option_1: 'autotrófica',
+                option_2: 'heterotrófica',
+                option_3: 'autóloga',
+                option_4: 'heteróloga',
+                answer: 2
+            },
+            {
+                question: 'Quais as duas proteínas cuja interação proporciona a atividade contrátil do tecido muscular?',
+                option_1: 'actina e miosina',
+                option_2: 'queratina e elastina',
+                option_3: 'ptialina e tripsina',
+                option_4: 'gastrina e secretina',
+                answer: 0
+            },
+            {
+                question: 'Tipo de músculo que realiza contração lenta e involuntária:',
+                option_1: 'cardíaco',
+                option_2: 'esquelético',
+                option_3: 'liso',
+                option_4: 'misto',
+                answer: 2
+            },
+            {
+                question: 'Qual dessas é uma doença degenerativa, com deterioração gradual da bainha de mielina, prejudicando as funções dos neurônios?',
+                option_1: 'Colite',
+                option_2: 'Colangite esclerosante',
+                option_3: 'Fibrose cística',
+                option_4: 'Esclerose múltipla',
+                answer: 3
+            },
+            {
+                question: 'Qual dessas é a proteína que se destaca na parte orgânica da matriz óssea?',
+                option_1: 'queratina',
+                option_2: 'albumina',
+                option_3: 'colágeno',
+                option_4: 'glúten',
+                answer: 2
+            },
+            {
+                question: 'Qual desses é o número aproximado de células em um corpo humano adulto?',
+                option_1: '100 mil',
+                option_2: '100 milhões',
+                option_3: '100 bilhões',
+                option_4: '100 trilhões',
+                answer: 3
+            },
+            {
+                question: 'Qual a porção do tubo digestivo que leva alimento ao estômago?',
+                option_1: 'cólon',
+                option_2: 'traqueia',
+                option_3: 'esôfago',
+                option_4: 'duodeno',
+                answer: 2
+            },
+            {
+                question: 'Quais células, quando completamente diferenciadas no corpo de um mamífero, não possuem núcleo?',
+                option_1: 'neurônios',
+                option_2: 'hepatócitos',
+                option_3: 'hemácias',
+                option_4: 'fibroblastos',
+                answer: 2
+            },
+            {
+                question: 'Dendritos e axônio são encontrados em que tipo de célula?',
+                option_1: 'hepatócito',
+                option_2: 'hemácia',
+                option_3: 'neurônio',
+                option_4: 'adipócito',
+                answer: 2
+            },
+            {
+                question: 'No neurônio, como são chamados os prolongamentos numerosos, especializados na função de receber os estímulos?',
+                option_1: 'axônios',
+                option_2: 'dendritos',
+                option_3: 'cílios',
+                option_4: 'telodendros',
+                answer: 1
+            },
+            {
+                question: 'Em qual desses encontramos músculo de contração rápida e involuntária?',
+                option_1: 'intestino',
+                option_2: 'miocárdio',
+                option_3: 'esternocleidomastoideo',
+                option_4: 'bexiga urinária',
+                answer: 1
+            },
+            {
+                question: 'Qual dessas é uma metaloproteína que contém ferro, presente nos eritrócitos e que permite o transporte de oxigênio?',
+                option_1: 'hemeritina',
+                option_2: 'hemaglutinina',
+                option_3: 'hemoglobina',
+                option_4: 'hemocianina',
+                answer: 2
+            },
     ])
     }
 }
