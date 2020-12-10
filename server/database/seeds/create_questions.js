@@ -745,6 +745,246 @@ module.exports = {
                 option_4: 'hemocianina',
                 answer: 2
             },
+            {
+                question: 'A grande semelhança entre a teoria darwinista clássica e o neodarwinismo:',
+                option_1: 'seleção natural',
+                option_2: 'mutação',
+                option_3: 'deriva genética',
+                option_4: 'uso e desuso',
+                answer: 0
+            },
+            {
+                question: 'Como é chamado o processo de variação e adaptação de populações ao longo das gerações, podendo inclusive provocar o surgimento de novas espécies?',
+                option_1: 'evolução',
+                option_2: 'herança',
+                option_3: 'mutação',
+                option_4: 'panmixia',
+                answer: 0
+            },
+            {
+                question: 'Os restos de seres vivos que existiram no passado, ou evidências de sua existência, e que foram preservados, são chamados:',
+                option_1: 'fósseis',
+                option_2: 'hieróglifos',
+                option_3: 'órgão vestigiais',
+                option_4: 'órgãos análogos',
+                answer: 0
+            },
+            {
+                question: 'Ciência responsável pelo levantamento e organização de fósseis, fornecendo importantes informações sobre a história evolutiva de cada espécie.',
+                option_1: 'Geologia',
+                option_2: 'Ecologia',
+                option_3: 'Paleontologia',
+                option_4: 'Zoologia',
+                answer: 2
+            },
+            {
+                question: 'Processo em que organismos de diferentes grupos de seres vivos, sem proximidade de parentesco, são submetidos às mesmas pressões de seleção e desenvolvem estruturas corporais semelhantes:',
+                option_1: 'convergência adaptativa',
+                option_2: 'sucessão ecológica',
+                option_3: 'irradiação adaptativa',
+                option_4: 'panmixia',
+                answer: 0
+            },
+            {
+                question: 'Processo em que seres vivos aparentados passam a colonizar diferentes ambientes, são submetidos a diferentes pressões de seleção e, após algum tempo, originam grupos diversificados, adaptados a cada ambiente particular:',
+                option_1: 'convergência adaptativa',
+                option_2: 'sucessão ecológica',
+                option_3: 'irradiação adaptativa',
+                option_4: 'panmixia',
+                answer: 2
+            },
+            {
+                question: 'Os órgãos que exibem a mesma função em diferentes tipos de seres vivos, embora possuam origem embrionária e anatomia interna diferentes:',
+                option_1: 'análogos',
+                option_2: 'homólogos',
+                option_3: 'vestigiais',
+                option_4: 'homeóticos',
+                answer: 0
+            },
+            {
+                question: 'Órgãos que possuem a mesma origem embrionária em espécies distintas e similar anatomia interna, mesmo que possam assumir funções diferentes:',
+                option_1: 'parálogos',
+                option_2: 'heterólogos',
+                option_3: 'análogos',
+                option_4: 'homólogos',
+                answer: 3
+            },
+            {
+                question: 'Órgãos que se apresentam como formas reduzidas de órgãos funcionais em outras espécies aparentadas:',
+                option_1: 'análogos',
+                option_2: 'homólogos',
+                option_3: 'vestigias',
+                option_4: 'ancestrais',
+                answer: 2
+            },
+            {
+                question: 'Qual desses é um órgão vestigial no corpo humano?',
+                option_1: 'apêndice cecal',
+                option_2: 'cápsula de Bowman',
+                option_3: 'cerebelo',
+                option_4: 'vesícula biliar',
+                answer: 0
+            },
+            {
+                question: 'Evidências bioquímicas da evolução podem ser obtidas pela análise de alguns compostos orgânicos. São eles:',
+                option_1: 'DNA, RNA e proteínas',
+                option_2: 'DNA, lipídeos e carboidratos',
+                option_3: 'DNA, proteínas e vitaminas',
+                option_4: 'DNA e lipídeos',
+                answer: 0
+            },
+            {
+                question: 'A convergência adaptativa pode ser observada entre ...',
+                option_1: 'cobras e lagartos',
+                option_2: 'chimpanzés e gorilas',
+                option_3: 'sapos e pererecas',
+                option_4: 'tubarões e golfinhos',
+                answer: 3
+            },
+            {
+                question: 'Como é chamada a representação gráfica que organiza os seres vivos de acordo com o parentesco evolutivo?',
+                option_1: 'rede genealógica',
+                option_2: 'arvore filogenética',
+                option_3: 'pedigree',
+                option_4: 'diagrama ontogenético',
+                answer: 1
+            },
+            {
+                question: 'Qual o evolucionista cuja teoria foi divulgada principalmente em seu livro “Filosofia Zoológica”?',
+                option_1: 'Lamarck',
+                option_2: 'Charles Darwin',
+                option_3: 'Mayr',
+                option_4: 'Dobzhansky',
+                answer: 0
+            },
+            {
+                question: 'Autor do livro “Um ensaio sobre o princípio da população”, que influenciou na teoria evolutiva de Charles Darwin:',
+                option_1: 'Hugo de Vries',
+                option_2: 'Thomas Malthus',
+                option_3: 'Theodosius Dobzhansky',
+                option_4: 'Thomas Morgan',
+                answer: 1
+            },
+            {
+                question: 'Qual desses cientistas NÃO está relacionado ao evolucionismo?',
+                option_1: 'Jean Baptiste Lamarck',
+                option_2: 'Theodosius Dobzhansky',
+                option_3: 'Charles Darwin',
+                option_4: 'Karl Von Linné',
+                answer: 3
+            },
+            {
+                question: 'Qual desses cientistas NÃO está relacionado à teria sintética da evolução?',
+                option_1: 'Ernst Mayr',
+                option_2: 'George Simpson',
+                option_3: 'Theodosius Dobzhanski',
+                option_4: 'Jean Baptiste Lamarck',
+                answer: 3
+            },
+            {
+                question: 'Qual teoria evolucionista destaca o ambiente como agente selecionador?',
+                option_1: 'criacionismo',
+                option_2: 'lamarckismo',
+                option_3: 'darwinismo',
+                option_4: 'michurinismo',
+                answer: 2
+            },
+            {
+                question: 'Qual dessas relaciona-se às ideias evolucionistas de Lamarck?',
+                option_1: 'lei do uso e desuso',
+                option_2: 'seleção natural',
+                option_3: 'mutação',
+                option_4: 'deriva gênica',
+                answer: 0
+            },
+            {
+                question: 'Qual desses conceitos caracteriza a teoria evolucionista de Charles Darwin?',
+                option_1: 'lei do uso e desuso',
+                option_2: 'seleção natural',
+                option_3: 'mutação',
+                option_4: 'deriva gênica',
+                answer: 1
+            },
+            {
+                question: '“As características modificadas em resposta ao ambiente são transmitidas e acumuladas nas gerações seguintes”. O trecho refere-se ao ...',
+                option_1: 'criacionismo',
+                option_2: 'lamarckismo',
+                option_3: 'darwinismo',
+                option_4: 'neodarwinismo',
+                answer: 1
+            },
+            {
+                question: 'Qual o título do livro de Charles Darwin que apresentou sua Teoria Evolutiva?',
+                option_1: 'A origem das espécies',
+                option_2: 'Filosofia zoológica',
+                option_3: 'O que é vida?',
+                option_4: 'Um ensaio sobre o Princípio da População',
+                answer: 0
+            },
+            {
+                question: 'Qual dessas NÃO se refere ao Darwinismo?',
+                option_1: 'sobrevivência do mais apto',
+                option_2: 'seleção natural',
+                option_3: 'humanos são descendentes de macacos',
+                option_4: 'luta pela vida',
+                answer: 2
+            },
+            {
+                question: 'Para Lamarck, há um fator que é a causa direta das variações e, para Darwin, esse mesmo fator seria o que seleciona dentre as variações possíveis a mais adaptada. Qual é esse fator?',
+                option_1: 'a competição',
+                option_2: 'a migração',
+                option_3: 'o ambiente',
+                option_4: 'o vigor híbrido',
+                answer: 2
+            },
+            {
+                question: 'Análises do DNA de chimpanzés mostraram que o homem é mais aparentado com eles do que com qualquer outro primata. Isso permite concluir que ...',
+                option_1: 'o chimpanzé é ancestral do homem',
+                option_2: 'o chimpanzé é ancestral dos gorilas',
+                option_3: 'o homem é ancestral dos gorilas',
+                option_4: 'o chimpanzé e o homem têm um ancestral comum',
+                answer: 3
+            },
+            {
+                question: 'Além de Charles Darwin, que outro cientista propôs a seleção natural como mecanismo essencial para o processo evolutivo?',
+                option_1: 'Alfred Wallace',
+                option_2: 'Georges Cuvier',
+                option_3: 'Hugo de Vries',
+                option_4: 'Richard Owen',
+                answer: 0
+            },
+            {
+                question: 'Quais dessas estruturas NÃO apresentam homologia com os braços do homem?',
+                option_1: 'nadadeiras peitorais da baleia',
+                option_2: 'patas dianteiras do cachorro',
+                option_3: 'asas da borboleta',
+                option_4: 'asas do morcego',
+                answer: 2
+            },
+            {
+                question: 'A fauna de pássaros fringilídeos, que ficaram conhecidos como tentilhões de Darwin, foi analisada pelo naturalista em qual desses locais?',
+                option_1: 'ilhas Malvinas',
+                option_2: 'ilhas Fiji',
+                option_3: 'arquipélago de Galápagos',
+                option_4: 'arquipélago do Bailique',
+                answer: 2
+            },
+            {
+                question: '“As espécies não sofrem modificações desde a sua criação”. O trecho refere-se ao ...',
+                option_1: 'fixismo',
+                option_2: 'lamarckismo',
+                option_3: 'darwinismo',
+                option_4: 'neodarwinismo',
+                answer: 0
+            },
+            {
+                question: 'Qual desses estudou mutação e recombinação na mosca drosófila?',
+                option_1: 'Hugo de Vries',
+                option_2: 'Thomas Malthus',
+                option_3: 'Georges Cuvier',
+                option_4: 'Thomas Morgan',
+                answer: 3
+            },
     ])
     }
 }
