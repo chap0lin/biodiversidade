@@ -1,8 +1,8 @@
 .mainDiv{
     background: linear-gradient(to bottom right, #1A360C, #3F1F0E);
     width: 100%;
-    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    flex:1;
 }

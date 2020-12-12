@@ -76,14 +76,14 @@ function Training() {
         //console.log(choice)
         if (choice === question.correctAnswer) {
             setPlayerPoints(playerPoints + 10 + Math.floor(time))
-            await gsap.to(correctRef.current, { duration: 0.8, background: 'green' })
-            await gsap.to(correctRef.current, { duration: 0.8, background: 'white' })
+            await gsap.to(correctRef.current, { duration: 1, background: 'green' })
+            await gsap.to(correctRef.current, { duration: 1, background: 'white' })
             //alert('Correto!')
         } else {
-            gsap.to('.item', { duration: 0.8, background: 'red' })
-			await gsap.to(correctRef.current, { duration: 0.8, background: 'green' })
-			gsap.to('.item', { duration: 0.8, background: 'white' })
-			await gsap.to(correctRef.current, { duration: 0.8, background: 'white' })
+            gsap.to('.item', { duration: 1, background: 'red' })
+			await gsap.to(correctRef.current, { duration: 1, background: 'green' })
+			gsap.to('.item', { duration: 1, background: 'white' })
+			await gsap.to(correctRef.current, { duration: 1, background: 'white' })
         }
         if (round < 6) {
             round = round + 1
@@ -104,6 +104,29 @@ function Training() {
     return (
         <div id="game-screen">
             <Background>
+                <div className="logo-container">
+                    {gameEnded?
+                    <svg xmlns="http://www.w3.org/2000/svg" width="268" height="76" viewBox="0 0 268 76">
+                        <text id="BIO" transform="translate(0 62)" fill="#fff" fontSize="57" fontFamily="SegoeUI, Segoe UI"><tspan x="0" y="0">BIO</tspan></text>
+                        <text id="DIVERSIDADE" transform="translate(98 41)" fill="#fff" fontSize="28" fontFamily="SegoeUI, Segoe UI"><tspan x="0" y="0">DIVERSIDADE</tspan></text>
+                        <text id="GENES" transform="translate(98 64)" fill="#fff" fontSize="11" fontFamily="SegoeUI, Segoe UI"><tspan x="0" y="0">GENES</tspan></text>
+                        <text id="ESPÉCIES" transform="translate(140 64)" fill="#fff" fontSize="11" fontFamily="SegoeUI, Segoe UI"><tspan x="0" y="0">ESPÉCIES</tspan></text>
+                        <text id="ECOSSISTEMAS" transform="translate(193 64)" fill="#fff" fontSize="11" fontFamily="SegoeUI, Segoe UI"><tspan x="0" y="0">ECOSSISTEMAS</tspan></text>
+                        <circle id="Elipse_1" data-name="Elipse 1" cx="1.5" cy="1.5" r="1.5" transform="translate(134 59)" fill="#fff"/>
+                        <circle id="Elipse_2" data-name="Elipse 2" cx="1.5" cy="1.5" r="1.5" transform="translate(187 59)" fill="#fff"/>
+                    </svg>
+                    :
+                    <svg xmlns="http://www.w3.org/2000/svg" width="79" height="22" viewBox="0 0 79 22">
+                        <text id="BIO" transform="translate(0 18)" fill="#fff" fontSize="17" fontFamily="SegoeUI, Segoe UI"><tspan x="0" y="0">BIO</tspan></text>
+                        <text id="DIVERSIDADE" transform="translate(29 12)" fill="#fff" fontSize="8" fontFamily="SegoeUI, Segoe UI"><tspan x="0" y="0">DIVERSIDADE</tspan></text>
+                        <text id="GENES" transform="translate(29 18)" fill="#fff" fontSize="3" fontFamily="SegoeUI, Segoe UI"><tspan x="0" y="0">GENES</tspan></text>
+                        <text id="ESPÉCIES" transform="translate(42 18)" fill="#fff" fontSize="3" fontFamily="SegoeUI, Segoe UI"><tspan x="0" y="0">ESPÉCIES</tspan></text>
+                        <text id="ECOSSISTEMAS" transform="translate(58 18)" fill="#fff" fontSize="3" fontFamily="SegoeUI, Segoe UI"><tspan x="0" y="0">ECOSSISTEMAS</tspan></text>
+                        <circle id="Elipse_1" data-name="Elipse 1" cx="1" cy="1" r="1" transform="translate(39 16)" fill="#fff"/>
+                        <circle id="Elipse_2" data-name="Elipse 2" cx="1" cy="1" r="1" transform="translate(55 16)" fill="#fff"/>
+                    </svg>
+                    }
+                </div>
                 <div className={`end-container  ${gameEnded?'':'sumiu'}`}>
 					<h2>Fim de Jogo!</h2>
 					<div className="players-container">
@@ -112,32 +135,34 @@ function Training() {
 							<h2 className="big-points">{playerPoints}</h2>
 						</div>
 					</div>
-					<button>Voltar para a Sala</button>
+					<button onClick={handleGoBack}>Voltar para a Sala</button>
 					
 				</div>
-                <div className={`game-container ${gameEnded?'sumiu':''}`}>
-                    <div className="scoreboard">
-                        <div className="player-one">
-                            <p>{user_object.login}</p>
-                            <p>{playerPoints}</p>
-                        </div>
-                        <div className="timer">
-                            <p>{timerValue}</p>
-                        </div>
-                    </div>
-                    <div className="question">
-                        <h2>{question.question}</h2>
-                    </div>
-                    <div className="answers">
-                        {question.answers.map((item, index) => (
-                            <div key={index} ref={index === question.correctAnswer ? correctRef : wrongRef} className="item" onClick={() => handleSelection(index)}>
-                                <p>{item}</p>
+                <div className={`div-game ${gameEnded?'sumiu':''}`}>
+                    <div className={`game-container`}>
+                        <div className="scoreboard">
+                            <div className="player-one">
+                                <p>{user_object.login}</p>
+                                <p>{playerPoints}</p>
                             </div>
-                        ))}
+                            <div className="timer">
+                                <p>{timerValue}</p>
+                            </div>
+                        </div>
+                        <div className="question">
+                            <h2>{question.question}</h2>
+                        </div>
+                        <div className="answers">
+                            {question.answers.map((item, index) => (
+                                <div key={index} ref={index === question.correctAnswer ? correctRef : wrongRef} className="item" onClick={() => handleSelection(index)}>
+                                    <p>{item}</p>
+                                </div>
+                            ))}
 
+                        </div>
+                        <button onClick={handleGoBack}>Sair</button>
                     </div>
                 </div>
-                <h2 onClick={handleGoBack}>Sair</h2>
             </Background>
         </div>
     );

@@ -24,7 +24,16 @@ function Room(){
     function keepAlive(){
         try{
             api.post('keepPlayerAliveRoom', {user_object, roomId, ready: playerReady}).then(response=>{
-                setRoomObject(response.data)
+                var formatedPlayerList = null
+                if(response.data.players!=null){
+                    formatedPlayerList = response.data.players.sort((a, b)=>{
+                        return b.points_t - a.points_t
+                    })
+                }
+                setRoomObject({
+                    ...response.data,
+                    players: formatedPlayerList
+                })
                 if(response.data.started){
                     clearInterval(interval)
                     playerReady = false
@@ -79,7 +88,7 @@ function Room(){
                             roomObject.players.map(player => (
                                 <div className="player-item" key={player.id}>
                                     <p>{player.login}</p>
-                                    <p>{player.points_w}</p>
+                                    <p>{player.points_t}</p>
                                 <div className={`${player.inGame?'ocupado':'disponivel'}`}></div>
                         </div>
                             ))

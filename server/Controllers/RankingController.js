@@ -1,6 +1,6 @@
 const knex = require('../database/connection')
 
-class QuestionsController{
+class RankingController{
     async getQuiz(request, response){
         const raw_questions = await knex('questions').select('*').orderByRaw('RANDOM()').limit(7)
         const formated_questions = []
@@ -29,6 +29,22 @@ class QuestionsController{
         })
         return formated_questions
     }
+
+    async resetIfNewWeek(timestamp){
+        //consultar tabela logs pra ver se tem log proximo em 24 horas
+        //if reseta points_w de todo mundo
+    }
+    async resetIfNewMonth(timestamp){
+        //consultar tabela logs pra ver se tem log proximo em 24 horas
+        //if reseta points_m de todo mundo
+    }
+    async updatePlayerPoints(id, points){
+        await knex('users').where('id', '=', id).update('points_t', points)
+    }
+    async getRankingTotal(request, response){
+        const players = await knex('users').select('id', 'login', 'points_t').orderBy('points_t', 'desc').limit(10)
+        response.json(players)
+    }
 }
 
-module.exports = QuestionsController
+module.exports = RankingController

@@ -1,4 +1,3 @@
-const { json } = require('express')
 const knex = require('../database/connection')
 
 class UsersController{
@@ -34,8 +33,6 @@ class UsersController{
                 message: 'Usuario criado com sucesso!'
             })
         }
-        
-        
     }
 }
 

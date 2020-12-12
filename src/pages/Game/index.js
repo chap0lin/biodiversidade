@@ -87,11 +87,15 @@ function Game() {
 						responded = false
 						if(game.currentRound === 7){//match over
 							setGameEnded(true)
+							var newUserData = user_object
 							if(response.data.player_1.id === user_object.id){
 								setWinner(game.player1Points>game.player2Points?'player':game.player1Points === game.player2Points?'tie':'adversary')
+								newUserData.points_t += game.player1Points
 							}else{
 								setWinner(game.player2Points>game.player1Points?'player':game.player2Points === game.player1Points?'tie':'adversary')
+								newUserData.points_t += game.player2Points
 							}
+							localStorage.setItem('userData', JSON.stringify(newUserData))
 							clearInterval(interval)
 							started = false
 							responded = false
@@ -152,21 +156,37 @@ function Game() {
 			await gsap.to(correctRef.current, { duration: 0.8, background: 'white' })
 		}
 	}
+	function handleGoBack(){
+
+        history.push('/room')
+    }
 
 	return (
 		<div id="game-screen">
 			<Background>
 				<div className="logo-container">
-					<svg xmlns="http://www.w3.org/2000/svg" width="79" height="22" viewBox="0 0 79 22">
-						<text id="BIO" transform="translate(0 18)" fill="#fff" fontSize="17" fontFamily="SegoeUI, Segoe UI"><tspan x="0" y="0">BIO</tspan></text>
-						<text id="DIVERSIDADE" transform="translate(29 12)" fill="#fff" fontSize="8" fontFamily="SegoeUI, Segoe UI"><tspan x="0" y="0">DIVERSIDADE</tspan></text>
-						<text id="GENES" transform="translate(29 18)" fill="#fff" fontSize="3" fontFamily="SegoeUI, Segoe UI"><tspan x="0" y="0">GENES</tspan></text>
-						<text id="ESPÉCIES" transform="translate(42 18)" fill="#fff" fontSize="3" fontFamily="SegoeUI, Segoe UI"><tspan x="0" y="0">ESPÉCIES</tspan></text>
-						<text id="ECOSSISTEMAS" transform="translate(58 18)" fill="#fff" fontSize="3" fontFamily="SegoeUI, Segoe UI"><tspan x="0" y="0">ECOSSISTEMAS</tspan></text>
-						<circle id="Elipse_1" data-name="Elipse 1" cx="1" cy="1" r="1" transform="translate(39 16)" fill="#fff"/>
-						<circle id="Elipse_2" data-name="Elipse 2" cx="1" cy="1" r="1" transform="translate(55 16)" fill="#fff"/>
-					</svg>
-				</div>
+                    {gameEnded?
+                    <svg xmlns="http://www.w3.org/2000/svg" width="268" height="76" viewBox="0 0 268 76">
+                        <text id="BIO" transform="translate(0 62)" fill="#fff" fontSize="57" fontFamily="SegoeUI, Segoe UI"><tspan x="0" y="0">BIO</tspan></text>
+                        <text id="DIVERSIDADE" transform="translate(98 41)" fill="#fff" fontSize="28" fontFamily="SegoeUI, Segoe UI"><tspan x="0" y="0">DIVERSIDADE</tspan></text>
+                        <text id="GENES" transform="translate(98 64)" fill="#fff" fontSize="11" fontFamily="SegoeUI, Segoe UI"><tspan x="0" y="0">GENES</tspan></text>
+                        <text id="ESPÉCIES" transform="translate(140 64)" fill="#fff" fontSize="11" fontFamily="SegoeUI, Segoe UI"><tspan x="0" y="0">ESPÉCIES</tspan></text>
+                        <text id="ECOSSISTEMAS" transform="translate(193 64)" fill="#fff" fontSize="11" fontFamily="SegoeUI, Segoe UI"><tspan x="0" y="0">ECOSSISTEMAS</tspan></text>
+                        <circle id="Elipse_1" data-name="Elipse 1" cx="1.5" cy="1.5" r="1.5" transform="translate(134 59)" fill="#fff"/>
+                        <circle id="Elipse_2" data-name="Elipse 2" cx="1.5" cy="1.5" r="1.5" transform="translate(187 59)" fill="#fff"/>
+                    </svg>
+                    :
+                    <svg xmlns="http://www.w3.org/2000/svg" width="79" height="22" viewBox="0 0 79 22">
+                        <text id="BIO" transform="translate(0 18)" fill="#fff" fontSize="17" fontFamily="SegoeUI, Segoe UI"><tspan x="0" y="0">BIO</tspan></text>
+                        <text id="DIVERSIDADE" transform="translate(29 12)" fill="#fff" fontSize="8" fontFamily="SegoeUI, Segoe UI"><tspan x="0" y="0">DIVERSIDADE</tspan></text>
+                        <text id="GENES" transform="translate(29 18)" fill="#fff" fontSize="3" fontFamily="SegoeUI, Segoe UI"><tspan x="0" y="0">GENES</tspan></text>
+                        <text id="ESPÉCIES" transform="translate(42 18)" fill="#fff" fontSize="3" fontFamily="SegoeUI, Segoe UI"><tspan x="0" y="0">ESPÉCIES</tspan></text>
+                        <text id="ECOSSISTEMAS" transform="translate(58 18)" fill="#fff" fontSize="3" fontFamily="SegoeUI, Segoe UI"><tspan x="0" y="0">ECOSSISTEMAS</tspan></text>
+                        <circle id="Elipse_1" data-name="Elipse 1" cx="1" cy="1" r="1" transform="translate(39 16)" fill="#fff"/>
+                        <circle id="Elipse_2" data-name="Elipse 2" cx="1" cy="1" r="1" transform="translate(55 16)" fill="#fff"/>
+                    </svg>
+                    }
+                </div>
 				<div className={`end-container  ${gameEnded?'':'sumiu'}`}>
 					<h2>Fim de Jogo!</h2>
 					<h2>{winner==='player'?'Vitória!':winner==='adversary'?'Derrota!':'Empate!'}</h2>
@@ -183,38 +203,37 @@ function Game() {
 							<h2 className="big-points">{score.adversary}</h2>
 						</div>
 					</div>
-					<button>Voltar para a Sala</button>
+					<button onClick={handleGoBack}>Voltar para a Sala</button>
 					
 				</div>
-				<div className={`game-container ${gameEnded?'sumiu':''}`}>
-					<div className="scoreboard">
-						<div className="player-one">
-							<p>{playerNames.player}</p>
-							<p>{score.player}</p>
-						</div>
-						<div className="timer">
-							<p>{timerValue}</p>
-						</div>
-						<div className="player-two">
-							<p>{playerNames.adversary}</p>
-							<p>{score.adversary}</p>
-						</div>
-					</div>
-					<div className="question">
-						<h2>{question.question!=null?question.question:''}</h2>
-					</div>
-					<div className="answers">
-						{question.answers.map((item, index) => (
-							<div key={index} ref={index === question.correctAnswer ? correctRef : wrongRef} className="item" onClick={() => handleSelection(index)}>
-								<p>{item}</p>
+				<div className={`div-game ${gameEnded?'sumiu':''}`}>
+					<div className={`game-container`}>
+						<div className="scoreboard">
+							<div className="player-one">
+								<p>{playerNames.player}</p>
+								<p>{score.player}</p>
 							</div>
-						))}
+							<div className="timer">
+								<p>{timerValue}</p>
+							</div>
+							<div className="player-two">
+								<p>{playerNames.adversary}</p>
+								<p>{score.adversary}</p>
+							</div>
+						</div>
+						<div className="question">
+							<h2>{question.question!=null?question.question:''}</h2>
+						</div>
+						<div className="answers">
+							{question.answers.map((item, index) => (
+								<div key={index} ref={index === question.correctAnswer ? correctRef : wrongRef} className="item" onClick={() => handleSelection(index)}>
+									<p>{item}</p>
+								</div>
+							))}
 
+						</div>
 					</div>
 				</div>
-				<Link to="/room" >
-					<h2>Sair</h2>
-				</Link>
 			</Background>
 		</div>
 	);

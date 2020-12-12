@@ -51,3 +51,18 @@
 #page-title .buttons-container button:last-child{
     background: rgba(255,255,255,0.1);
 }
+#page-title .ranking-container{
+    width: 300px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+#page-title .ranking-container .ranking-item{
+    display: flex;
+    gap:5px;
+    color: white;
+}
+#page-title .invisible{
+    display: none;
+}

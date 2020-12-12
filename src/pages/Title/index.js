@@ -10,6 +10,8 @@ function Title(){
     const history = useHistory()
     const user_object = JSON.parse(localStorage.getItem('userData'))
     const [titleObject, setTitleObject] = useState({})
+    const [ranking, setRanking] = useState(null)
+    const [rankingVisible, setRankingVisible] = useState(false)
     console.log(JSON.stringify(user_object))
 
     useEffect(()=>{
@@ -37,8 +39,16 @@ function Title(){
     function handleEnterTraining(){
         history.push('/training')
     }
+    function handleRankingClick(){
+        api.get('ranking_t').then(response => {
+            setRanking(response.data)
 
-
+        })
+        setRankingVisible(true)
+    }
+    function handleLeave(){
+        history.push('/')
+    }
     return(
         <div id="page-title">
             <Background>
@@ -53,17 +63,27 @@ function Title(){
                         <circle id="Elipse_2" data-name="Elipse 2" cx="1.5" cy="1.5" r="1.5" transform="translate(187 59)" fill="#fff"/>
                     </svg>
                 </div>
-                <div className="rooms-container">
+                <div className={`${rankingVisible?'ranking-container':'invisible'}`}>
+                    {ranking!=null &&
+                            ranking.map((player, index) => (
+                                <div className="ranking-item" key={player.id}>
+                                    <p>{index+1}</p>
+                                    <p>{player.login}</p>
+                                    <p>{player.points_t}</p>
+                                </div>
+                            ))
+                    }
+                    <button onClick={()=>{setRankingVisible(false)}}>FECHAR</button>
+                </div>
+                <div className={`${rankingVisible?'invisible':'rooms-container'}`}>
                     <button onClick={handleEnterRoom}>JOGAR</button>
                     <button onClick={handleEnterTraining}>PRATICAR</button>
                 </div>
-                <div className="buttons-container">
-                    <button>CRIAR SALA</button>
-                    <button>RANKINGS</button>
+                <div className={`${rankingVisible?'invisible':'buttons-container'}`}>
+                    <button onClick={handleRankingClick}>RANKINGS</button>
+                    <button onClick={handleLeave}>Sair</button>
                 </div>
-                <Link to="/" >
-                    <h2>Sair</h2>
-                </Link>
+                
             </Background>
         </div>
     )

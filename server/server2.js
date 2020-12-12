@@ -4,8 +4,9 @@ const cors = require('cors')
 const routes = require('./routes')
 
 const QuestionsController = require('./Controllers/QuestionsController')
-const { use } = require('./routes')
+const RankingController = require('./Controllers/RankingController')
 const questionsController = new QuestionsController()
+const rankingController = new RankingController()
 
 const app = express()
 
@@ -130,10 +131,8 @@ app.post('/keepPlayerAliveGame', async (req, res) => {
                     if(games[gameIndex].currentRound===7){ //ended
                         console.log('Game Ended')
                         res.json(games[gameIndex])
-                        tooglePlayerInGameStatus(games[gameIndex].player_1.id)
-                        tooglePlayerInGameStatus(games[gameIndex].player_2.id)
-                        games.splice(gameIndex, 1)
-                        //gameEnded()
+                        gameEnded(gameIndex)
+                        
                         return
                     }
                     games[gameIndex].player1Responded = false
@@ -190,19 +189,36 @@ async function getGame(playerId){
     return output
 }
 
-function gameEnded(){
-    game = {
-        started:false,
-        generated: false,
-        player_1: null,
-        player_2: null,
-        questions: null,
-        player1Responded: false,
-        player2Responded: false,
-        player1Points: 0,
-        player2Points: 0,
-        currentRound: 0
-    }
+function updatPlayerScore(id, points){
+    var output = -1
+    players.map((player, index) => {
+        if(player.id === id){
+            player.points_t+=points
+            output = player.points_t
+            return
+        }   
+    })
+    return output
+}
+
+function gameEnded(gameIndex){
+    //const today = new Date()
+    // if(today.getUTCDate()===0){//check if is the first day of the week
+        
+    // }
+    // if(today.getUTCDate()===0){//check if is the first day of the month
+
+    // }
+
+
+    const p1 = updatPlayerScore(games[gameIndex].player_1.id, games[gameIndex].player1Points)
+    const p2 = updatPlayerScore(games[gameIndex].player_2.id, games[gameIndex].player2Points)
+    rankingController.updatePlayerPoints(games[gameIndex].player_1.id, p1)
+    rankingController.updatePlayerPoints(games[gameIndex].player_2.id, p2)
+
+    tooglePlayerInGameStatus(games[gameIndex].player_1.id)
+    tooglePlayerInGameStatus(games[gameIndex].player_2.id)
+    games.splice(gameIndex, 1)
 }
 
 app.listen(3333, ()=>{
