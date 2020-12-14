@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {Link, useHistory} from 'react-router-dom'
 import Background from '../../components/background'
 import api from '../../services/api'
@@ -16,6 +16,9 @@ function Login(){
         password: '',
         confirm: ''
     })
+    useEffect(()=>{
+        localStorage.setItem('userData', null)
+    }, [])
     function handleLogin(){
         try{
             api.post('services-login', loginForm).then(response => {

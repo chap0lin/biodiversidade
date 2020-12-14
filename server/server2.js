@@ -48,6 +48,20 @@ app.post('/keepPlayerAliveRoom', async(req, res) => {
     //console.log(JSON.stringify(players))
     const playerIndex = await getPlayer(user_object)
     //console.log(`gp: ${hasGamePendent}[]:${games.length>0?JSON.stringify(games[hasGamePendent]):JSON.stringify(games)}`)
+
+    if(hasGamePendent!==-1){
+        const a = await getPlayer(games[hasGamePendent].player_1, false)
+        if(a>=0){
+            console.log(`Ainda tem jogo disk: ${players[a].login}`)
+        }else{
+            //nao tem jogo
+            games.splice(hasGamePendent-1,1)
+            hasGamePendent = -1;
+        }
+        //const p = await 
+        //console.log('player: ' + players[p].updatedAt)
+    }
+
     if(ready){
         if(hasGamePendent !== -1 && games[hasGamePendent].player_1.id !== user_object.id){
             games[hasGamePendent].player_2 = user_object
@@ -94,7 +108,7 @@ app.post('/keepPlayerAliveRoom', async(req, res) => {
     players = updatedPlayers
 
     const gameIndex = await getGame(user_object.id)
-    console.log(`[${user_object.login}] gi:${gameIndex} - ${gameIndex!==-1?JSON.stringify(games[gameIndex].generated):'nulo'}`)
+    //console.log(`[${user_object.login}] gi:${gameIndex} - ${gameIndex!==-1?JSON.stringify(games[gameIndex].generated):'nulo'}`)
     //format and send
     res.json({
         started: gameIndex!==-1?games[gameIndex].generated:false,
@@ -111,8 +125,36 @@ app.post('/keepPlayerAliveGame', async (req, res) => {
     const round = JSON.parse(req.body.round)
     var gameIndex = await getGame(user_object.id)
     const playerIndex = await getPlayer(user_object)
+
+    
+
     if(games[gameIndex].started === 1){ // segunda++ requisicao recebida
-        
+
+        // verificar se o outro player saiu
+        if(games[gameIndex].player_1.id === user_object.id){
+            const a = await getPlayer(games[gameIndex].player_2, false)
+            if(a>=0){ //jogador ainda está ativo na lista de players
+                //console.log(`Ainda tem jogo disk: ${players[a].login}`)
+            }else{ //senao ele saiu
+                //nao tem jogo
+                console.log('Game Ended')
+                games[gameIndex].abandoned = true
+                res.json(games[gameIndex])
+                gameEnded(gameIndex, true)
+            }
+        }else{
+            const a = await getPlayer(games[gameIndex].player_1, false)
+            if(a>=0){ //jogador ainda está ativo na lista de players
+                //console.log(`Ainda tem jogo disk: ${players[a].login}`)
+            }else{ //senao ele saiu
+                console.log('Game Ended')
+                games[gameIndex].abandoned = true
+                res.json(games[gameIndex])
+                gameEnded(gameIndex, true)
+            }
+        }
+
+
         //console.log(`GameAlive! (${responded}) - [${points}]`)
         if(responded){
             console.log('respondeu' + points)
@@ -148,26 +190,43 @@ app.post('/keepPlayerAliveGame', async (req, res) => {
         //console.log(JSON.stringify(game))
     }  
     res.json(games[gameIndex])
+
+    var updatedPlayers = []
+    var now = new Date().getTime()
+    players.map(player => {
+        if( (now - player.updatedAt)<=5000){
+            updatedPlayers.push(player)
+        }
+    })
+    players = updatedPlayers
 })
 
-async function getPlayer(playerObj){
+async function getPlayer(playerObj, update = true){
     var output = -1
+   // console.log(`GetPlayer: [${playerObj.login}] - (${update})`)
     const now = new Date().getTime()
     await players.map((player, index) => {
         if(player.id === playerObj.id){
-            player.updatedAt = now
+            if(update){
+                player.updatedAt = now
+                console.log(`UPDATED: [${player.login}] - ${player.updatedAt}`)
+            }
             output = index
             return
         }   
     })
-    if(output === -1){
-        output = players.push({
-            ...playerObj,
-            updatedAt: new Date().getTime(),
-            inGame: false,
-        })
+    if(update){
+        if(output === -1){
+            output = -1 + players.push({
+                ...playerObj,
+                updatedAt: new Date().getTime(),
+                inGame: false,
+            }) 
+        }
+    }else{
+        console.log(`Checking [${playerObj.login}]`)
     }
-    return output - 1
+    return output
 }
 
 async function tooglePlayerInGameStatus(playerId){
@@ -201,7 +260,7 @@ function updatPlayerScore(id, points){
     return output
 }
 
-function gameEnded(gameIndex){
+function gameEnded(gameIndex, gameFailed = false){
     //const today = new Date()
     // if(today.getUTCDate()===0){//check if is the first day of the week
         
@@ -210,15 +269,16 @@ function gameEnded(gameIndex){
 
     // }
 
-
-    const p1 = updatPlayerScore(games[gameIndex].player_1.id, games[gameIndex].player1Points)
-    const p2 = updatPlayerScore(games[gameIndex].player_2.id, games[gameIndex].player2Points)
-    rankingController.updatePlayerPoints(games[gameIndex].player_1.id, p1)
-    rankingController.updatePlayerPoints(games[gameIndex].player_2.id, p2)
-
+    if(!gameFailed){
+        const p1 = updatPlayerScore(games[gameIndex].player_1.id, games[gameIndex].player1Points)
+        const p2 = updatPlayerScore(games[gameIndex].player_2.id, games[gameIndex].player2Points)
+        rankingController.updatePlayerPoints(games[gameIndex].player_1.id, p1)
+        rankingController.updatePlayerPoints(games[gameIndex].player_2.id, p2)    
+    }
     tooglePlayerInGameStatus(games[gameIndex].player_1.id)
-    tooglePlayerInGameStatus(games[gameIndex].player_2.id)
+    tooglePlayerInGameStatus(games[gameIndex].player_2.id)  
     games.splice(gameIndex, 1)
+    
 }
 
 app.listen(3333, ()=>{

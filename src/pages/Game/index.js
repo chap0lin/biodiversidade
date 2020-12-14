@@ -72,6 +72,16 @@ function Game() {
 					started = true
 				}else{
 					const game = response.data
+					if(game.abandoned){
+						setGameEnded(true)
+						setWinner('Jogador abandonou a partida! :/')
+						clearInterval(interval)
+						started = false
+						responded = false
+						points = 0
+						round = 0
+					}
+
 					if(response.data.player_1.id === user_object.id){
 						setScore({
 							player:  game.player1Points,
@@ -189,7 +199,7 @@ function Game() {
                 </div>
 				<div className={`end-container  ${gameEnded?'':'sumiu'}`}>
 					<h2>Fim de Jogo!</h2>
-					<h2>{winner==='player'?'Vitória!':winner==='adversary'?'Derrota!':'Empate!'}</h2>
+					<h2>{winner==='player'?'Vitória!':winner==='adversary'?'Derrota!':winner==='tie'?'Empate!':winner}</h2>
 					<div className="players-container">
 						<div className={`player ${winner==='player'?'winner':winner==='tie'?'tie':''}`}>
 							<h1 className="big-name">{playerNames.player}</h1>

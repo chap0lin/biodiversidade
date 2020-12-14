@@ -12,7 +12,7 @@ function Room(){
     
     const history = useHistory()
     const [roomObject, setRoomObject] = useState({})
-    const [inQueue, setInQueue] = useState(false)
+    const [inQueue, setInQueue] = useState(playerReady)
     useEffect(()=>{
         if(user_object != null && roomId != null){
             interval = setInterval(keepAlive, 1000)
@@ -57,9 +57,11 @@ function Room(){
             
     }
     function handleGoBack(){
-        clearInterval(interval)
-        playerReady = false
-        history.push('/title')
+        if(!inQueue){
+            clearInterval(interval)
+            playerReady = false
+            history.push('/title')
+        }
     }
 
     return(
