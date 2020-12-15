@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {Link, useHistory} from 'react-router-dom'
+import {useHistory} from 'react-router-dom'
 import Background from '../../components/background'
 import api from '../../services/api'
 import './styles.css'
@@ -126,12 +126,6 @@ function Login(){
                     <button onClick={handleSignup}>CADASTRAR</button>
                     
                     <p onClick={switchSignupMode}>Já possui conta? Entre</p>
-                </div>
-                <div className="anon-container">
-                    <h2 className="container-title">Não quer criar conta?</h2>
-                    <Link to="/title" >
-                        <button>Entrar de forma Anônima</button>
-                    </Link>
                 </div>
             </Background>
         </div>
