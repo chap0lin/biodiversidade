@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react'
-import {Link, useHistory} from 'react-router-dom'
+import { useHistory} from 'react-router-dom'
 import Background from '../../components/background'
 import api from '../../services/api'
 
@@ -9,7 +9,7 @@ function Title(){
     //const location = useLocation()
     const history = useHistory()
     const user_object = JSON.parse(localStorage.getItem('userData'))
-    const [titleObject, setTitleObject] = useState({})
+    //const [titleObject, setTitleObject] = useState({})
     const [ranking, setRanking] = useState(null)
     const [rankingVisible, setRankingVisible] = useState(false)
     console.log(JSON.stringify(user_object))
@@ -20,7 +20,7 @@ function Title(){
         }else{
             try{
                 api.post('titleRequest', user_object).then(response => {
-                    setTitleObject(response.data)
+                    //setTitleObject(response.data)
                 })
             }catch(err){
                 console.log(err)

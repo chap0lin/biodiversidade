@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { gsap } from 'gsap'
 import Background from '../../components/background'
 import api from '../../services/api'
@@ -17,7 +17,7 @@ function Training() {
     const [playerPoints, setPlayerPoints] = useState(0)
     const correctRef = useRef(null)
     const [gameEnded, setGameEnded] = useState(false)
-    const [winner, setWinner] = useState('player')
+    const winner = 'player'
 
     const wrongRef = useRef(null)
     const [question, setQuestion] = useState({
@@ -28,10 +28,7 @@ function Training() {
         ],
         correctAnswer: 0
     })
-    const [score, setScore] = useState({
-        player: 0,
-        adversary: 0
-    })
+
     useEffect(()=>{
 		api.get('quiz').then(response => {
             bd = response.data

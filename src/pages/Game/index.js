@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { gsap } from 'gsap'
 import Background from '../../components/background'
 import api from '../../services/api'
