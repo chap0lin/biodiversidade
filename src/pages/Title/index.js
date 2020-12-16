@@ -67,9 +67,9 @@ function Title(){
                     {ranking!=null &&
                             ranking.map((player, index) => (
                                 <div className="ranking-item" key={player.id}>
-                                    <p>{index+1}</p>
-                                    <p>{player.login}</p>
-                                    <p>{player.points_t}</p>
+                                    <p className="position">{index+1}</p>
+                                    <p className="name">{player.login}</p>
+                                    <p className="points">{player.points_t}</p>
                                 </div>
                             ))
                     }
@@ -81,7 +81,7 @@ function Title(){
                 </div>
                 <div className={`${rankingVisible?'invisible':'buttons-container'}`}>
                     <button onClick={handleRankingClick}>RANKINGS</button>
-                    <button onClick={handleLeave}>Sair</button>
+                    <button onClick={handleLeave}>SAIR</button>
                 </div>
                 
             </Background>

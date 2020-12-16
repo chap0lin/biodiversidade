@@ -64,6 +64,9 @@
     border: 0;
     border-radius: 20px;
 }
+#page-login .login-container button:hover{
+    background: #264119;
+}
 #page-login .login-container p{
     color: white;
 }

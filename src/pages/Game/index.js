@@ -12,6 +12,7 @@ var started = false
 var responded = false
 var points = 0
 var round = 0
+var questionJustResponded = {id:-1}
 function Game() {
 	const user_object = JSON.parse(localStorage.getItem('userData'))
     //const roomId = localStorage.getItem('roomId')
@@ -148,22 +149,25 @@ function Game() {
 	}
 
 	async function handleSelection(choice) {
-		const time = timerValue
-		if (choice === question.correctAnswer) {
-			points+=10 + Math.floor(time)
-			await setScore({
-				...score,
-				player: score.player + 10 + Math.floor(time)
-			})
-			responded = true
-			await gsap.to(correctRef.current, { duration: 0.8, background: 'green' })
-			await gsap.to(correctRef.current, { duration: 0.8, background: 'white' })
-		} else {
-			responded = true
-			gsap.to('.item', { duration: 0.8, background: 'red' })
-			await gsap.to(correctRef.current, { duration: 0.8, background: 'green' })
-			gsap.to('.item', { duration: 0.8, background: 'white' })
-			await gsap.to(correctRef.current, { duration: 0.8, background: 'white' })
+		if(question.id!==questionJustResponded.id){
+			const time = timerValue
+			questionJustResponded=question
+			if (choice === question.correctAnswer) {
+				points+=10 + Math.floor(time)
+				await setScore({
+					...score,
+					player: score.player + 10 + Math.floor(time)
+				})
+				responded = true
+				await gsap.to(correctRef.current, { duration: 0.8, background: 'green' })
+				await gsap.to(correctRef.current, { duration: 0.8, background: 'white' })
+			} else {
+				responded = true
+				gsap.to('.item', { duration: 0.8, background: 'red' })
+				await gsap.to(correctRef.current, { duration: 0.8, background: 'green' })
+				gsap.to('.item', { duration: 0.8, background: 'white' })
+				await gsap.to(correctRef.current, { duration: 0.8, background: 'white' })
+		}
 		}
 	}
 	function handleGoBack(){
@@ -213,7 +217,7 @@ function Game() {
 							<h2 className="big-points">{score.adversary}</h2>
 						</div>
 					</div>
-					<button onClick={handleGoBack}>Voltar para a Sala</button>
+					<button onClick={handleGoBack}>VOLTAR</button>
 					
 				</div>
 				<div className={`div-game ${gameEnded?'sumiu':''}`}>

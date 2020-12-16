@@ -82,16 +82,16 @@ function Room(){
                     <h2 className="title">{roomObject.name!=null?roomObject.name:''}</h2>
                     <div className="players-list">
                         <div className="list-header">
-                            <p>Jogador</p>
-                            <p>Pontos</p>
-                            <p>Status</p>
+                            <p className="name">Jogador</p>
+                            <p className="points">Pontos</p>
+                            <p className="status">Status</p>
                         </div>
                         {roomObject.players!=null &&
                             roomObject.players.map(player => (
                                 <div className="player-item" key={player.id}>
-                                    <p>{player.login}</p>
-                                    <p>{player.points_t}</p>
-                                <div className={`${player.inGame?'ocupado':'disponivel'}`}></div>
+                                    <p className="name">{player.login}</p>
+                                    <p className="points">{player.points_t}</p>
+                                <div className={`status ${player.inGame?'ocupado':'disponivel'}`}></div>
                         </div>
                             ))
                         }
@@ -99,7 +99,9 @@ function Room(){
                     </div>
                     <button onClick={handlePlayClick}>{inQueue?'CANCELAR':'JOGAR'}</button>
                 </div>
-                <h2 onClick={handleGoBack}>Voltar</h2>
+                <div className='buttons-container'>
+                    <button onClick={handleGoBack}>VOLTAR</button>
+                </div>
             </Background>
         </div>
     )

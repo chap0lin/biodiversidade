@@ -30,6 +30,9 @@
     color: white;
     border:1px solid gray;
 }
+#page-title .rooms-container button:hover{
+    background: #264119;
+}
 
 
 #page-title .buttons-container{
@@ -46,10 +49,16 @@
     border:1px solid gray;
 }
 #page-title .buttons-container button:first-child{
-    background: rgba(0,0,0,0.4);
+    background: rgba(0,0,0,0.2);
+}
+#page-title .buttons-container button:first-child:hover{
+    background: rgba(0,0,0,0.5);
 }
 #page-title .buttons-container button:last-child{
     background: rgba(255,255,255,0.1);
+}
+#page-title .buttons-container button:last-child:hover{
+    background: rgba(255,255,255,0.2);
 }
 #page-title .ranking-container{
     width: 300px;
@@ -58,11 +67,36 @@
     flex-direction: column;
     gap: 5px;
 }
+#page-title .ranking-container button{
+    height: 45px;
+    width: 150px;
+    border-radius: 20px;
+    color: white;
+    border:1px solid gray;
+    background: rgba(255,255,255,0.1);
+    margin-top:10px;  
+    align-self: center;
+}
+#page-title .ranking-container button:hover{
+    background: rgba(255,255,255,0.2);
+}
 #page-title .ranking-container .ranking-item{
     display: flex;
     gap:5px;
     color: white;
 }
+#page-title .ranking-container .ranking-item .position{
+    width: 20px;
+}
+#page-title .ranking-container .ranking-item .name{
+    width: 220px;
+}
+#page-title .ranking-container .ranking-item .points{
+    width: 60px;
+    text-align: right;
+}
+
+
 #page-title .invisible{
     display: none;
 }

@@ -16,7 +16,8 @@
     flex-direction: column;
     align-items: center;
     border: 1px solid gray;
-    padding: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     background: rgba(0,0,0,0.1);
     border-radius: 50px;
     width: 300px;
@@ -28,15 +29,31 @@
 
 #page-room .players-container .players-list .list-header{
     display: flex;
-    justify-content: space-between;
-    width: 260px;
+    width: 300px;
     color: white;
 }
+
+#page-room .players-container .players-list .name{
+    margin-left: 10px;
+    width: 180px;
+}
+#page-room .players-container .players-list .points{
+    width: 60px;
+    text-align: center;
+
+}
+#page-room .players-container .players-list .status{
+    width: 40px;
+}
+
 #page-room .players-container .players-list .player-item{
     display: flex;
-    justify-content: space-between;
     align-items: center;
     color: white;
+}
+
+#page-room .players-container .players-list .player-item .status{
+    margin-left: 10px;
 }
 #page-room .players-container .players-list .player-item .disponivel{
     width: 20px;
@@ -59,3 +76,19 @@
     color: white;
     border:1px solid gray;
 }
+#page-room .players-container button:hover{
+    background: #264119;
+}
+#page-room .buttons-container button{
+    height: 45px;
+    width: 150px;
+    border-radius: 20px;
+    color: white;
+    border:1px solid gray;
+    background: rgba(255,255,255,0.1);
+    margin-top:10px;    
+}
+#page-room .buttons-container button:hover{
+    background: rgba(255,255,255,0.2);
+}
+

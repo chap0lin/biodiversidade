@@ -56,6 +56,11 @@
     
 }
 
+#game-screen .game-container .answers .item:hover{
+    opacity: 0.9;
+    cursor: pointer;
+}
+
 #game-screen .end-container{
     display: flex;
     flex-direction: column;
@@ -72,7 +77,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 10px;
 }
 #game-screen .end-container .players-container .winner{
     background: #1A360C;
@@ -90,14 +94,25 @@
 
 #game-screen .end-container .player{
     width: 150px;
+    height: 150px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap:0px;
 }
 
 #game-screen .end-container .player h1{
     font-size: 26px;
     max-width: 150px;
+    color:white;
+    margin-block-start: 0.67em;
+    margin-block-end: 0;
+}
+#game-screen .end-container .player h2{
+    font-size: 40px;
+    color:white;
+    margin-block-start: 10px;
+    margin-block-end: 0.67em;
 }
 
 
@@ -107,6 +122,14 @@
 
 #game-screen button{
     align-self: center;
-    margin-top: 20px;
-    width: 60%;
+    height: 45px;
+    width: 150px;
+    border-radius: 20px;
+    color: white;
+    border:1px solid gray;
+    background: rgba(255,255,255,0.1);
+    margin-top:10px; 
+}
+#game-screen button:hover{
+    background: rgba(255,255,255,0.2);
 }

@@ -132,7 +132,7 @@ function Training() {
 							<h2 className="big-points">{playerPoints}</h2>
 						</div>
 					</div>
-					<button onClick={handleGoBack}>Voltar para a Sala</button>
+					<button onClick={handleGoBack}>VOLTAR</button>
 					
 				</div>
                 <div className={`div-game ${gameEnded?'sumiu':''}`}>
@@ -157,7 +157,7 @@ function Training() {
                             ))}
 
                         </div>
-                        <button onClick={handleGoBack}>Sair</button>
+                        <button onClick={handleGoBack}>SAIR</button>
                     </div>
                 </div>
             </Background>
