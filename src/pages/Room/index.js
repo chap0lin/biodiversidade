@@ -32,6 +32,7 @@ function Room(){
                 }
                 setRoomObject({
                     ...response.data,
+                    name: 'Jogadores',
                     players: formatedPlayerList
                 })
                 if(response.data.started){
