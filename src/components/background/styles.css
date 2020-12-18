@@ -5,4 +5,18 @@
     flex-direction: column;
     align-items: center;
     flex:1;
+    z-index: 1;
+}
+.containerDiv{
+    z-index: 2;
+}
+
+#globo-fundo{
+    position: absolute;
+    z-index: 0 ;
+    bottom: 0   ;
+    width: 50vh;
+    height: 50vh;
+    border-radius: 50%;
+    opacity: 0.2;
 }

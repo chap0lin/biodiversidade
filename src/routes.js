@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Route } from 'react-router-dom'
+import { BrowserRouter, Redirect, Route } from 'react-router-dom'
 
 import Login from './pages/Login'
 import Title from './pages/Title'
@@ -15,7 +15,7 @@ function Routes(){
             <Route path="/room" component={Room} />
             <Route path="/game" component={Game} />
             <Route path="/training" component={Training} />
-            <Route path="*" component={Login} />
+            <Route render={()=> <Redirect to={{pathname:"/"}} />}/>
         </BrowserRouter>
     )
 }
