@@ -15,6 +15,7 @@ function Routes(){
             <Route path="/room" component={Room} />
             <Route path="/game" component={Game} />
             <Route path="/training" component={Training} />
+            <Route path="*" component={Login} />
         </BrowserRouter>
     )
 }
