@@ -81,17 +81,18 @@ function Game() {
 						responded = false
 						points = 0
 						round = 0
+						questionJustResponded = {id:-1}
 					}
 
 					if(response.data.player_1.id === user_object.id){
 						setScore({
-							player:  game.player1Points,
-							adversary:  game.player2Points
+							player:  game.player1Points>score.player?game.player1Points:score.player,
+							adversary:  game.player2Points>score.adversary?game.player2Points:score.adversary
 						})
 					}else{
 						setScore({
-							player:  game.player2Points,
-							adversary:  game.player1Points
+							player:  game.player2Points>score.player?game.player2Points:score.player,
+							adversary:  game.player1Points>score.adversary?game.player1Points:score.adversary
 						})
 					}
 					if(game.currentRound!== round){
@@ -112,6 +113,7 @@ function Game() {
 							responded = false
 							points = 0
 							round = 0
+							questionJustResponded = {id:-1}
 						}else{
 							round = game.currentRound
 							setTimeout(()=>{
