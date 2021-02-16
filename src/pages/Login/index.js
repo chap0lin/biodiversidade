@@ -4,6 +4,8 @@ import Background from '../../components/background'
 import api from '../../services/api'
 import './styles.css'
 
+import indicator from '../../assets/activityIndicator.gif'
+
 function Login(){
     const history = useHistory()
     const [signupMode, setSignupMode] = useState(false)
@@ -16,15 +18,19 @@ function Login(){
         password: '',
         confirm: ''
     })
+    const [showIndicator, setShowIndicator] = useState(false)
     useEffect(()=>{
         localStorage.setItem('userData', null)
     }, [])
     function handleLogin(){
         try{
+            setShowIndicator(true)
             api.post('services-login', loginForm).then(response => {
+                setShowIndicator(false)
                 localStorage.setItem('userData', JSON.stringify(response.data))
                 history.push('/title', {params: response.data})
             }).catch(function (error) {
+                setShowIndicator(false)
                 if (error.response) {
                   // Request made and server responded
                   console.log(error.response.status);
@@ -127,6 +133,7 @@ function Login(){
                     
                     <p onClick={switchSignupMode}>Já possui conta? Entre</p>
                 </div>
+                <img className={showIndicator?'indicator showIndicator':'indicator'} src={indicator} alt="Indicador"/>
             </Background>
         </div>
     )

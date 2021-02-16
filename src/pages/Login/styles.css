@@ -101,3 +101,15 @@
 #page-login .invisible{
     display: none;
 }
+
+#page-login .indicator{
+    display: none;
+    width: 100px;
+    height: 100px;
+    align-self: center;
+    margin-top: 20px;
+}
+
+#page-login .showIndicator{
+    display: block;
+}
