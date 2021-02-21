@@ -5,6 +5,7 @@ import api from '../../services/api'
 import './styles.css'
 
 import indicator from '../../assets/activityIndicator.gif'
+import menino from '../../assets/menino.png'
 
 function Login(){
     const history = useHistory()
@@ -95,7 +96,10 @@ function Login(){
                             <div></div>
                             <div></div>
                         </div>
-                        <p>O termo <strong>biodiversidade</strong> indica o grau de variação de vida, podendo ser entendido de várias formas, uma vez que descreve ao mesmo tempo a variedade de todas as espécies <strong>(diversidade de espécies)</strong>, a variedade dos genes contidos dentro de cada indivíduo de tais espécies <strong>(diversidade genética)</strong> e também a variedade de ecossistemas dentro de uma área ou do próprio planeta como um todo <strong>(diversidade de ecossistemas)</strong>.</p>
+                        <div className="about-text">
+                            <img src={menino} alt="garoto explicando"/>
+                            <p>O termo <strong>biodiversidade</strong> indica o grau de variação de vida, podendo ser entendido de várias formas, uma vez que descreve ao mesmo tempo a variedade de todas as espécies <strong>(diversidade de espécies)</strong>, a variedade dos genes contidos dentro de cada indivíduo de tais espécies <strong>(diversidade genética)</strong> e também a variedade de ecossistemas dentro de uma área ou do próprio planeta como um todo <strong>(diversidade de ecossistemas)</strong>.</p>
+                        </div>
                     </div>
                 </div>
                 <div className="logo-container">
