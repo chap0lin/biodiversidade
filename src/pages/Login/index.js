@@ -19,6 +19,7 @@ function Login(){
         confirm: ''
     })
     const [showIndicator, setShowIndicator] = useState(false)
+    const [showAbout, setShowAbout] = useState(false)
     useEffect(()=>{
         localStorage.setItem('userData', null)
     }, [])
@@ -88,6 +89,15 @@ function Login(){
     return(
         <div id="page-login" style={{background: 'green'}}>
             <Background>
+                <div className={`modal-about ${showAbout?'':'invisible'}`}>
+                    <div className="about-content">
+                        <div className="close-about" onClick={()=>setShowAbout(false)}>
+                            <div></div>
+                            <div></div>
+                        </div>
+                        <p>O termo <strong>biodiversidade</strong> indica o grau de variação de vida, podendo ser entendido de várias formas, uma vez que descreve ao mesmo tempo a variedade de todas as espécies <strong>(diversidade de espécies)</strong>, a variedade dos genes contidos dentro de cada indivíduo de tais espécies <strong>(diversidade genética)</strong> e também a variedade de ecossistemas dentro de uma área ou do próprio planeta como um todo <strong>(diversidade de ecossistemas)</strong>.</p>
+                    </div>
+                </div>
                 <div className="logo-container">
                 <svg xmlns="http://www.w3.org/2000/svg" width="268" height="76" viewBox="0 0 268 76">
                     <text id="BIO" transform="translate(0 62)" fill="#fff" fontSize="57" fontFamily="SegoeUI, Segoe UI"><tspan x="0" y="0">BIO</tspan></text>
@@ -133,6 +143,7 @@ function Login(){
                     
                     <p onClick={switchSignupMode}>Já possui conta? Entre</p>
                 </div>
+                <button id="about" onClick={()=>setShowAbout(true)}>Sobre o jogo</button>
                 <img className={showIndicator?'indicator showIndicator':'indicator'} src={indicator} alt="Indicador"/>
             </Background>
         </div>
