@@ -16,6 +16,7 @@
 ## :memo: Descrição
 Biodiversidade é um jogo multiplayer online em formato de quiz em interface web-browser.
 
+O termo <strong>biodiversidade</strong> indica o grau de variação de vida, podendo ser entendido de várias formas, uma vez que descreve ao mesmo tempo a variedade de todas as espécies <strong>(diversidade de espécies)</strong>, a variedade dos genes contidos dentro de cada indivíduo de tais espécies <strong>(diversidade genética)</strong> e também a variedade de ecossistemas dentro de uma área ou do próprio planeta como um todo <strong>(diversidade de ecossistemas)</strong>.
 
 ## :rocket: Como usar
 Para testar a aplicação basta acessar o [link][live-demo-url].
