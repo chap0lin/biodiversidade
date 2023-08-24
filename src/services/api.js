@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-    baseURL: 'http://adega.domqueshot.com:4000/'
+    baseURL: 'https://adega.domqueshot.com:4000/'
 })
 
 export default api;
